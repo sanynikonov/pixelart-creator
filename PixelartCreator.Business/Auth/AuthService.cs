@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PixelartCreator.Business
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly SignInManager<User> _manager;
 
