@@ -55,14 +55,20 @@ namespace PixelartCreator.Business
 
             var mentions = _counter.CountColorsMentions(image);
 
-            var hexes = mentions.Select(x => ConvertToHex(x.Key));
-            //maybe won't convert to expression
-            var colors = await _repository.GetAsync<Color>(x => hexes.Any(y => y == ConvertToHex(x)));
+            var colors = await _repository.GetAsync<Color>();
 
-            return mentions.Select(x => new ColorMentionsCount { A = x.Key.A, B = x.Key.B, R = x.Key.R, G = x.Key.G, MentionsCount = x.Value });
+            return colors.Join(mentions,
+                x => System.Drawing.Color.FromArgb(x.A, x.R, x.G, x.B),
+                x => x.Key,
+                (c, m) => new ColorMentionsCount
+                {
+                    Id = c.Id,
+                    A = c.A,
+                    B = c.B,
+                    R = c.R,
+                    G = c.G,
+                    MentionsCount = m.Value
+                });
         }
-
-        private string ConvertToHex(Color color) => $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
-        private string ConvertToHex(System.Drawing.Color color) => $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
     }
 }
