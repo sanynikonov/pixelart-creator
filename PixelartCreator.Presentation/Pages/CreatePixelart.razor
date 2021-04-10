@@ -1,0 +1,33 @@
+﻿@page "/pixelarts/create"
+@inject IFileService _fileService
+
+<h3>CreatePixelart</h3>
+
+<InputFile OnChange="UploadFile" />
+
+@if (_uploadedFileName != null)
+{
+    <img src="Images/@_uploadedFileName" />
+}
+
+@code {
+    private string _uploadedFileName;
+
+    public async Task UploadFile(IFileListEntry[] files)
+    {
+        var file = files.FirstOrDefault();
+
+        if (file != null)
+        {
+            var model = new FileUploadModel
+            {
+                OldName = file.Name,
+                Stream = file.Data
+            };
+
+            var name = await _fileService.UploadImageAsync(model);
+
+            _uploadedFileName = name;
+        }
+    }
+}

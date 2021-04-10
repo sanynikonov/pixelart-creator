@@ -36,7 +36,7 @@ namespace PixelartCreator.Presentation
             services.AddSingleton<WeatherForecastService>();
 
             services.AddInfrastructureServices(
-                Configuration.GetConnectionString("PixelartDatabase"), Environment.ContentRootPath);
+                Configuration.GetConnectionString("PixelartDatabase"), Environment.WebRootPath);
             services.AddBusinessServices();
         }
 

@@ -17,6 +17,7 @@ namespace PixelartCreator.Infrastructure
         public FileService(string rootPath)
         {
             _rootPath = rootPath;
+            _random = new Random();
         }
 
         public Image GetImage(string relativePath)
