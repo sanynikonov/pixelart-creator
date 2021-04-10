@@ -1,5 +1,4 @@
-﻿using PixelartCreator.Business;
-using PixelartCreator.Domain;
+﻿using PixelartCreator.Domain;
 using System;
 using System.Drawing;
 using System.IO;

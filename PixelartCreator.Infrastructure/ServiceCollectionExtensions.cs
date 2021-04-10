@@ -10,13 +10,13 @@ namespace PixelartCreator.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, string rootPath)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string connectionString, string rootPath)
         {
             return services
                 .AddScoped<IImageStorage, FileService>(s => new FileService(rootPath))
                 .AddScoped<IFileService, FileService>(s => new FileService(rootPath))
                 .AddDbContextPool<AppDbContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("PixelartDatabase")));
+                    options.UseSqlServer(connectionString));
         }
     }
 }
