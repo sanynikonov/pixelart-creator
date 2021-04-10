@@ -22,7 +22,7 @@ namespace PixelartCreator.Business
             _pixelartGenerator = pixelartGenerator;
         }
 
-        public async Task<PixelartCreationResultModel> Create(PixelartCreateModel model)
+        public async Task<PixelartCreationResultModel> CreateAsync(PixelartCreateModel model)
         {
             var image = _storage.GetImage(model.SourcePath);
 
@@ -41,13 +41,13 @@ namespace PixelartCreator.Business
             return new PixelartCreationResultModel { ResultPath = path };
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var pixelart = await _repository.GetAsync<Pixelart>(id);
             await _repository.DeleteAsync(pixelart);
         }
 
-        public async Task<PixelartInfoModel> Get(int id)
+        public async Task<PixelartInfoModel> GetAsync(int id)
         {
             var pixelart = await _repository.GetAsync<Pixelart>(id);
 
@@ -62,7 +62,7 @@ namespace PixelartCreator.Business
             };
         }
 
-        public async Task<IEnumerable<PixelartInfoModel>> GetByUser(int userId, PageFilter filter)
+        public async Task<IEnumerable<PixelartInfoModel>> GetByUserAsync(int userId, PageFilter filter)
         {
             var pixelarts = await _repository.GetAsync<Pixelart>(x => x.UserId == userId, filter.PageNumber, filter.PageSize);
 
@@ -77,7 +77,7 @@ namespace PixelartCreator.Business
             });
         }
 
-        public async Task Save(PixelartSaveModel model)
+        public async Task SaveAsync(PixelartSaveModel model)
         {
             var pixelart = new Pixelart
             {
@@ -91,7 +91,7 @@ namespace PixelartCreator.Business
             await _repository.AddAsync(pixelart);
         }
 
-        public async Task Update(PixelartUpdateModel model)
+        public async Task UpdateAsync(PixelartUpdateModel model)
         {
             var pixelart = await _repository.GetAsync<Pixelart>(model.Id);
             pixelart.Description = model.Description;

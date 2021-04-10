@@ -20,17 +20,17 @@ namespace PixelartCreator.Business
             return _manager.UserManager.GetUserId(principal);
         }
 
-        public async Task<SignInResult> Login(LoginModel model)
+        public async Task<SignInResult> LoginAsync(LoginModel model)
         {
             return await _manager.PasswordSignInAsync(model.Login, model.Password, isPersistent: false, lockoutOnFailure: false);
         }
 
-        public async Task Logout()
+        public async Task LogoutAsync()
         {
             await _manager.SignOutAsync();
         }
 
-        public async Task<IdentityResult> Register(RegistrationModel model)
+        public async Task<IdentityResult> RegisterAsync(RegistrationModel model)
         {
             var user = new User
             {

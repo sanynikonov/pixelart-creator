@@ -9,9 +9,9 @@ namespace PixelartCreator.Business
 {
     public interface IAuthService
     {
-        Task<SignInResult> Login(LoginModel model);
-        Task<IdentityResult> Register(RegistrationModel model);
+        Task<SignInResult> LoginAsync(LoginModel model);
+        Task<IdentityResult> RegisterAsync(RegistrationModel model);
         string GetUserId(ClaimsPrincipal principal);
-        Task Logout();
+        Task LogoutAsync();
     }
 }

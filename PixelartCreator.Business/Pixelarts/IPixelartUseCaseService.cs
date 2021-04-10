@@ -7,11 +7,11 @@ namespace PixelartCreator.Business
 {
     public interface IPixelartUseCaseService
     {
-        Task<PixelartCreationResultModel> Create(PixelartCreateModel model);
-        Task Save(PixelartSaveModel model);
-        Task Update(PixelartUpdateModel model);
-        Task Delete(int id);
-        Task<IEnumerable<PixelartInfoModel>> GetByUser(int userId, PageFilter filter);
-        Task<PixelartInfoModel> Get(int id);
+        Task<PixelartCreationResultModel> CreateAsync(PixelartCreateModel model);
+        Task SaveAsync(PixelartSaveModel model);
+        Task UpdateAsync(PixelartUpdateModel model);
+        Task DeleteAsync(int id);
+        Task<IEnumerable<PixelartInfoModel>> GetByUserAsync(int userId, PageFilter filter);
+        Task<PixelartInfoModel> GetAsync(int id);
     }
 }
