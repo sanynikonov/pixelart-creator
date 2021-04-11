@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Business", "PixelartCreator.Business\PixelartCreator.Business.csproj", "{46C96895-6994-4358-ACFE-B3CA8F7DC2E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelartCreator.Presentation", "PixelartCreator.Presentation\PixelartCreator.Presentation.csproj", "{805A7264-6BEA-440B-A339-4951FE0AEC79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Presentation", "PixelartCreator.Presentation\PixelartCreator.Presentation.csproj", "{805A7264-6BEA-440B-A339-4951FE0AEC79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
