@@ -27,10 +27,10 @@ namespace PixelartCreator.Business
             var image = _storage.GetImage(model.SourcePath);
 
             var ids = model.AvailibleColorsIds;
-
+            var colors = await _repository.GetAsync<Color>(x => ids.Contains(x.Id));
             var options = new PixelizingOptions
             {
-                AvailibleColors = await _repository.GetAsync<Color>(x => ids.Contains(x.Id)),
+                AvailibleColors = colors.Select(x => System.Drawing.Color.FromArgb(x.A, x.R, x.G, x.B)),
                 Size = model.Size * (int)model.Unit
             };
 

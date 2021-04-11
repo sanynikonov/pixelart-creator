@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using ClassColor = PixelartCreator.Domain.Color;
 using StructColor = System.Drawing.Color;
+using System.Drawing;
+using System;
 
 namespace PixelartCreator.Domain
 {
@@ -11,6 +13,7 @@ namespace PixelartCreator.Domain
         private const int TextureSize = 16;
         private readonly IImageStorage _storage;
 
+
         public PixelartGenerator(IImageStorage storage)
         {
             _storage = storage;
@@ -18,8 +21,42 @@ namespace PixelartCreator.Domain
 
         public Image CreatePixelart(Image image, PixelizingOptions options)
         {
-            return null;
+            var _availibleColors = options.AvailibleColors;
+            var cache = new Dictionary<StructColor, StructColor>();
+
+            var bitmap = new Bitmap(BitmapConverter.FromColorsMatrix(image.Pixels), options.Size);
+            var pixels = BitmapConverter.ToColorsMatrix(bitmap);
+
+            var result = new StructColor[pixels.GetLength(0), pixels.GetLength(1)];
+
+            for (int y = 0; y < pixels.GetLength(0); y++)
+            {
+                for (int x = 0; x < pixels.GetLength(1); x++)
+                {
+                    result[y, x] = FindMostSuitableAvailibleColor(pixels[y, x], _availibleColors, cache);
+                }
+            }
+
+            return new Image { Pixels = result };
         }
+
+        private StructColor FindMostSuitableAvailibleColor(StructColor color, IEnumerable<StructColor> _availibleColors, Dictionary<StructColor, StructColor> _cachedColors)
+        {
+            if (_cachedColors.TryGetValue(color, out var neighbour))
+            {
+                return neighbour;
+            }
+
+            var distances = _availibleColors.Select(c => new { Neighbour = c, Distance = DistanceToNeighbour(color, c) });
+            var minDistance = distances.Min(x => x.Distance);
+            neighbour = distances.First(x => x.Distance == minDistance).Neighbour;
+
+            _cachedColors.Add(color, neighbour);
+            return neighbour;
+        }
+
+        public static double DistanceToNeighbour(StructColor c1, StructColor c2)
+            => 30 * Math.Pow(c2.R - c1.R, 2) + 59 * Math.Pow(c2.G - c1.G, 2) + 11 * Math.Pow(c2.B - c1.B, 2);
 
         public Image TransformPixelsToMinecraftBlocks(Image image, TransformOptions options)
         {

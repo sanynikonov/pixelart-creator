@@ -7,7 +7,7 @@ namespace PixelartCreator.Domain
 {
     public class PixelizingOptions
     {
-        public IEnumerable<Color> AvailibleColors { get; set; }
+        public IEnumerable<System.Drawing.Color> AvailibleColors { get; set; }
         public Size Size { get; set; }
     }
 }
