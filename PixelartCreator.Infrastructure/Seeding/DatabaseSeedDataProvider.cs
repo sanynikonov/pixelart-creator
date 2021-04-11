@@ -20,7 +20,7 @@ namespace PixelartCreator.Infrastructure
         {
             var parser = new XlsColorsParser(_path);
             var colors = parser.GetAll()
-                .Select(x => new Color { A = x.A, B = x.B, R = x.R, G = x.G });
+                .Select((x, i) => new Color { Id = i + 1, A = x.A, B = x.B, R = x.R, G = x.G });
 
             modelBuilder.Entity<Color>().HasData(colors);
         }

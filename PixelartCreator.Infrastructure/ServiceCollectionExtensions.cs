@@ -12,11 +12,15 @@ namespace PixelartCreator.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, string connectionString, string rootPath)
         {
-            return services
+            services
                 .AddScoped<IImageStorage, FileService>(s => new FileService(rootPath))
                 .AddScoped<IFileService, FileService>(s => new FileService(rootPath))
                 .AddSingleton<IDatabaseSeedDataProvider>(s => new DatabaseSeedDataProvider(rootPath))
-                .AddDbContextPool<AppDbContext>(options =>
+                .AddIdentityCore<User>()
+                .AddEntityFrameworkStores<AppDbContext>();
+
+            return services
+                .AddDbContext<AppDbContext>(options =>
                     options.UseSqlServer(connectionString));
         }
     }

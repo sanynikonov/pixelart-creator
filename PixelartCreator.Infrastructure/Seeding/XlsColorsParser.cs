@@ -15,7 +15,7 @@ namespace PixelartCreator.Infrastructure
 
         public XlsColorsParser(string path)
         {
-            _path = path;
+            _path = Path.Combine(path, "Colors.xlsx");
         }
 
         public IEnumerable<Color> GetAll()
