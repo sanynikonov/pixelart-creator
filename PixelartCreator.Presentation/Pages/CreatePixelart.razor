@@ -5,44 +5,64 @@
 
 <InputFile OnChange="UploadFile" />
 
-<div class="mt-3 btn-group d-flex">
-    <button class="flex-fill btn @(_activeTab == "Source" ? "btn-primary" : "btn-secondary")"
-            @onclick="@(() => ChangeActiveTab("Source"))">
-        Photo
-    </button>
-    <button class="flex-fill btn @(_activeTab == "Result" ? "btn-primary" : "btn-secondary")"
-            @onclick="@(() => ChangeActiveTab("Result"))">
-        Pixelart
-    </button>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h6>Options</h6>
+            <EditForm Model="@_options">
+                <InputNumber @bind-Value="_options.Width" />
+                <InputNumber @bind-Value="_options.Height" />
+                <InputSelect @bind-Value="_options.Unit">
+                    <option selected value="@SizeUnit.Pixel">@SizeUnit.Pixel</option>
+                    <option value="@SizeUnit.Map">@SizeUnit.Map</option>
+                </InputSelect>
+            </EditForm>
+        </div>
+        <div class="col-sm-8">
+            <div class="mt-3 btn-group d-flex">
+                <button class="flex-fill btn @TabColour(Source)"
+                        @onclick="@(() => ChangeActiveTab(Source))">
+                    Photo
+                </button>
+                <button class="flex-fill btn @TabColour(Result)"
+                        @onclick="@(() => ChangeActiveTab(Result))">
+                    Pixelart
+                </button>
+            </div>
+
+            @if (_activeTab == Source)
+            {
+                @if (_uploadedFileName != null)
+                {
+                    <img class="img-fluid" src="Images/@_uploadedFileName" />
+                }
+                else
+                {
+                    <p>Upload a photo</p>
+                }
+            }
+            else if (_activeTab == Result)
+            {
+                <p>Click submit button to create a pixelart</p>
+            }
+        </div>
+    </div>
 </div>
 
-@if (_activeTab == "Source")
-{
-    @if (_uploadedFileName != null)
-    {
-        <img class="img-fluid" src="Images/@_uploadedFileName" />
-    }
-    else
-    {
-        <p>Upload a photo</p>
-    }
-}
-else if (_activeTab == "Result")
-{
-    <p>Kek</p>
-}
 @code {
-    private string[] _tabs = { "Source", "Result" };
-    private string _activeTab = "Source";
+    private string _activeTab = Source;
+    private const string Source = "Source";
+    private const string Result = "Result";
 
-    private void ChangeActiveTab(string tabName)
-    {
-        _activeTab = tabName;
-    }
+    private string TabColour(string tabName) => _activeTab == tabName ? "btn-primary" : "btn-secondary";
+
+    private void ChangeActiveTab(string tabName) => _activeTab = tabName;
+
+    private PixelartOptions _options = new PixelartOptions { Unit = SizeUnit.Pixel };
 
     private string _uploadedFileName;
 
-    public async Task UploadFile(IFileListEntry[] files)
+    private async Task UploadFile(IFileListEntry[] files)
     {
         var file = files.FirstOrDefault();
 
@@ -58,5 +78,17 @@ else if (_activeTab == "Result")
 
             _uploadedFileName = name;
         }
+
+        UpdateOptionsFromUploadedFile();
     }
+
+    private void UpdateOptionsFromUploadedFile()
+    {
+        var image = _fileService.GetImageInfo(_uploadedFileName);
+        _options.Width = image.Width;
+        _options.Height = image.Height;
+        _options.Unit = SizeUnit.Pixel;
+    }
+
+
 }
