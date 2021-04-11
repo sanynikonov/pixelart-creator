@@ -1,5 +1,7 @@
 ﻿@page "/pixelarts/create"
 @inject IFileService _fileService
+@inject IPixelartUseCaseService _pixelartService
+@inject IColorService _colorService
 
 <h3>CreatePixelart</h3>
 
@@ -29,6 +31,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="container">
+                    <div class="col-md-12 text-center">
+                        <button type="button" class="btn btn-primary w-50" @onclick="BuildPixelart">Submit</button>
+                    </div>
+                </div>
+                
             </EditForm>
             
         </div>
@@ -48,7 +57,7 @@
             {
                 @if (_uploadedFileName != null)
                 {
-                    <img class="img-fluid" src="Images/@_uploadedFileName" />
+                    <img class="w-100" src="Images/@_uploadedFileName" />
                 }
                 else
                 {
@@ -57,7 +66,14 @@
             }
             else if (_activeTab == Result)
             {
-                <p>Click submit button to create a pixelart</p>
+                @if (_pixelartFileName != null)
+                {
+                    <img class="w-100" src="Images/@_pixelartFileName" />
+                }
+                else
+                {
+                    <p>Click submit button to create a pixelart</p>
+                }
             }
         </div>
     </div>
@@ -75,6 +91,7 @@
     private PixelartOptions _options = new PixelartOptions { Unit = SizeUnit.Pixel };
 
     private string _uploadedFileName;
+    private string _pixelartFileName;
 
     private async Task UploadFile(IFileListEntry[] files)
     {
@@ -94,6 +111,8 @@
         }
 
         UpdateOptionsFromUploadedFile();
+
+        _activeTab = Source;
     }
 
     private void UpdateOptionsFromUploadedFile()
@@ -104,5 +123,22 @@
         _options.Unit = SizeUnit.Pixel;
     }
 
+    private async Task BuildPixelart()
+    {
+        var colorsIds = (await _colorService.GetAsync()).Select(x => x.Id);
 
+        var model = new PixelartCreateModel
+        {
+            Size = new System.Drawing.Size(_options.Width, _options.Height),
+            SourcePath = _uploadedFileName,
+            Unit = _options.Unit,
+            AvailibleColorsIds = colorsIds
+        };
+
+        var response = await _pixelartService.CreateAsync(model);
+
+        _pixelartFileName = System.IO.Path.GetFileName(response.ResultPath);
+
+        _activeTab = Result;
+    }
 }
