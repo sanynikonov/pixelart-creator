@@ -15,6 +15,7 @@ namespace PixelartCreator.Infrastructure
             return services
                 .AddScoped<IImageStorage, FileService>(s => new FileService(rootPath))
                 .AddScoped<IFileService, FileService>(s => new FileService(rootPath))
+                .AddSingleton<IDatabaseSeedDataProvider>(s => new DatabaseSeedDataProvider(rootPath))
                 .AddDbContextPool<AppDbContext>(options =>
                     options.UseSqlServer(connectionString));
         }
