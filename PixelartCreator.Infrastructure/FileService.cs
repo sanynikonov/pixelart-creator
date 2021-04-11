@@ -81,5 +81,16 @@ namespace PixelartCreator.Infrastructure
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
+
+        public ImageInfoModel GetImageInfo(string fileName)
+        {
+            using var image = System.Drawing.Image.FromFile(_rootPath + ImageFolder + fileName);
+
+            return new ImageInfoModel
+            {
+                Height = image.Height,
+                Width = image.Width
+            };
+        }
     }
 }

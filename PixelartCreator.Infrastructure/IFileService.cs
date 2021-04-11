@@ -8,5 +8,6 @@ namespace PixelartCreator.Infrastructure
     public interface IFileService
     {
         Task<string> UploadImageAsync(FileUploadModel model);
+        ImageInfoModel GetImageInfo(string fileName);
     }
 }
