@@ -5,18 +5,32 @@
 
 <InputFile OnChange="UploadFile" />
 
-<div class="container">
+<div class="container mt-5">
     <div class="row">
         <div class="col-sm-4">
-            <h6>Options</h6>
+            <p class="text-center display-4">Options</p>
+            
             <EditForm Model="@_options">
-                <InputNumber @bind-Value="_options.Width" />
-                <InputNumber @bind-Value="_options.Height" />
-                <InputSelect @bind-Value="_options.Unit">
-                    <option selected value="@SizeUnit.Pixel">@SizeUnit.Pixel</option>
-                    <option value="@SizeUnit.Map">@SizeUnit.Map</option>
-                </InputSelect>
+                <div class="d-flex flex-row">
+                    <div class="flex-column p-1">
+                        <label>Unit</label>
+                        <div class="h-100 form-group">
+                            <InputSelect id="unit" class="h-50 form-control align-content-center" @bind-Value="_options.Unit">
+                                <option selected value="@SizeUnit.Pixel">@SizeUnit.Pixel</option>
+                                <option value="@SizeUnit.Map">@SizeUnit.Map</option>
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="flex-column p-1">
+                        <label>Width/Height</label>
+                        <div class="form-group">
+                            <InputNumber id="width" class="form-control" @bind-Value="_options.Width" />
+                            <InputNumber id="height" class="form-control" @bind-Value="_options.Height" />
+                        </div>
+                    </div>
+                </div>
             </EditForm>
+            
         </div>
         <div class="col-sm-8">
             <div class="mt-3 btn-group d-flex">
