@@ -10,7 +10,7 @@ namespace PixelartCreator.Infrastructure
 {
     public class FileService : IImageStorage, IFileService
     {
-        private const string ImageFolder = "/Images/";
+        private const string ImageFolder = "Images";
         private readonly string _rootPath;
         private readonly Random _random;
 
@@ -22,7 +22,7 @@ namespace PixelartCreator.Infrastructure
 
         public Image GetImage(string relativePath)
         {
-            var fullPath = Path.Combine(_rootPath, relativePath);
+            var fullPath = GetImageFullPath(relativePath);
             var image = System.Drawing.Image.FromFile(fullPath);
             using var bitmap = new Bitmap(image);
             var pixels = BitmapConverter.ToColorsMatrix(bitmap);
@@ -32,7 +32,7 @@ namespace PixelartCreator.Infrastructure
         public string SaveImage(Image image)
         {
             using var bitmap = BitmapConverter.FromColorsMatrix(image.Pixels);
-            var path = Path.Combine(_rootPath, "Images", $"{Guid.NewGuid()}.png");
+            var path = GetImageFullPath($"{Guid.NewGuid()}.png");
             bitmap.Save(path);
             return path;
         }
@@ -58,7 +58,7 @@ namespace PixelartCreator.Infrastructure
 
         private string GetImageFullPath(string fileName)
         {
-            return _rootPath + ImageFolder + fileName;
+            return Path.Combine(_rootPath, ImageFolder, fileName);
         }
 
         private string CreateValuableFileName(string oldName)
@@ -84,7 +84,7 @@ namespace PixelartCreator.Infrastructure
 
         public ImageInfoModel GetImageInfo(string fileName)
         {
-            using var image = System.Drawing.Image.FromFile(_rootPath + ImageFolder + fileName);
+            using var image = System.Drawing.Image.FromFile(GetImageFullPath(fileName));
 
             return new ImageInfoModel
             {
