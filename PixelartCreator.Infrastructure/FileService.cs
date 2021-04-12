@@ -67,7 +67,7 @@ namespace PixelartCreator.Infrastructure
             if (oldName.Length > 75)
                 name = ShortenFileName(oldName);
 
-            return DateTime.Now.ToString("ddMMyyyy-HHmmss") + "-" + GetRandomString(8) + "-" + name;
+            return DateTime.Now.ToString("ddMMyyyy-HHmmss") + "T" + GetRandomString(8) + "-" + name;
         }
 
         private string ShortenFileName(string fileName)
