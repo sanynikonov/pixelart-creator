@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OfficeOpenXml;
@@ -21,8 +22,15 @@ namespace PixelartCreator.Infrastructure
                 .AddSingleton<IDatabaseSeedDataProvider>(s => new DatabaseSeedDataProvider(rootPath));
 
             services
-                .AddIdentityCore<User>()
-                .AddEntityFrameworkStores<AppDbContext>();
+                .AddIdentity<User, IdentityRole<int>>(opts => {
+                    opts.Password.RequiredLength = 5;
+                    opts.Password.RequireNonAlphanumeric = false;
+                    opts.Password.RequireLowercase = false;
+                    opts.Password.RequireUppercase = false;
+                    opts.Password.RequireDigit = false;
+                })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
             return services
                 .AddScoped<IRepository, EfRepository>()
