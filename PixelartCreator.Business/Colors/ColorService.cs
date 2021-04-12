@@ -1,6 +1,7 @@
 ﻿using PixelartCreator.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +24,31 @@ namespace PixelartCreator.Business
         public async Task<IEnumerable<Color>> GetAsync()
         {
             return await _repository.GetAsync<Color>();
+        }
+
+        public async Task<IEnumerable<ColorLibraryItem>> GetColorsLibraryAsync()
+        {
+            var entities = await _repository.GetAsync<Color>();
+
+            var items = entities.Select(x => new ColorLibraryItem
+            {
+                Id = x.Id,
+                Name = x.Name,
+                A = x.A,
+                B = x.B,
+                G = x.G,
+                R = x.R
+            }).ToList();
+
+            foreach (var item in items)
+            {
+                var id = item.Id;
+                var blocks = await _repository
+                    .GetAsync<MinecraftBlock>(x => x.ColorId == id);
+                item.BlocksNames = blocks.Select(x => x.Name);
+            }
+
+            return items;
         }
     }
 }
