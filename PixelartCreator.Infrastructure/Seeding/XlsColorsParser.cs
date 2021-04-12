@@ -1,7 +1,7 @@
 ﻿using OfficeOpenXml;
+using PixelartCreator.Domain;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,7 +18,7 @@ namespace PixelartCreator.Infrastructure
             _path = Path.Combine(path, "Colors.xlsx");
         }
 
-        public IEnumerable<Color> GetAll()
+        public SeedingData GetAll()
         {
             var fileInfo = new FileInfo(_path);
 
@@ -26,22 +26,56 @@ namespace PixelartCreator.Infrastructure
 
             var worksheet = package.Workbook.Worksheets.First();
 
-            List<string> colorsStringValues = new List<string>();
-            int row = 1;
-            int column = 3;
-            var value = worksheet.Cells[row++, column].Value;
+            var blockId = 1;
+            var row = 1;
 
-            while (value != null && !string.IsNullOrEmpty(value.ToString()))
+            var colorsList = new List<Color>();
+            var blocksList = new List<MinecraftBlock>();
+
+            var nameCell = worksheet.Cells[row, 1].Value;
+            var valueCell = worksheet.Cells[row, 3].Value;
+            var blocksCell = worksheet.Cells[row, 4].Value;
+
+            while (valueCell != null && !string.IsNullOrEmpty(valueCell.ToString()))
             {
-                colorsStringValues.Add(value.ToString());
-                value = worksheet.Cells[row++, column].Value;
+                row++;
+
+                var matches = _pattern.Matches(valueCell.ToString());
+                var blocksNames = blocksCell.ToString().Split(", ", StringSplitOptions.RemoveEmptyEntries);
+                var name = nameCell.ToString().Split(' ', StringSplitOptions.RemoveEmptyEntries)[1];
+
+                var blocks = blocksNames.Select(x => new MinecraftBlock
+                {
+                    ColorId = row,
+                    Id = blockId++,
+                    Name = x
+                });
+
+                var color = new Color
+                {
+                    Id = row,
+                    Name = name,
+                    A = 255,
+                    R = byte.Parse(matches[0].Value),
+                    G = byte.Parse(matches[1].Value),
+                    B = byte.Parse(matches[2].Value),
+                };
+
+                colorsList.Add(color);
+                blocksList.AddRange(blocks);
+                
+                nameCell = worksheet.Cells[row, 1].Value;
+                valueCell = worksheet.Cells[row, 3].Value;
+                blocksCell = worksheet.Cells[row, 4].Value;
             }
 
-            return colorsStringValues.Select(s =>
+            var data = new SeedingData
             {
-                var matches = _pattern.Matches(s);
-                return Color.FromArgb(int.Parse(matches[0].Value), int.Parse(matches[1].Value), int.Parse(matches[2].Value));
-            });
+                Blocks = blocksList,
+                Colors = colorsList
+            };
+
+            return data;
         }
     }
 }
