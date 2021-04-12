@@ -6,11 +6,11 @@
 <div class="accordion" id="accordionExample">
     @foreach (var item in _colors)
     {
-        <div class="card m-1">
+        <div class="card">
             <div class="card-header d-flex flex-row" id="heading@(item.Id)">
-                <div style="height: 30px; width: 30px; background-color: rgb(@item.R, @item.G, @item.B)"></div>
-                <h5 class="mb-0">
-                    <button class="btn btn-link collapsed bg-white" type="button" data-toggle="collapse"
+                <div class="m-1" style="height: 30px; width: 30px; background-color: rgb(@item.R, @item.G, @item.B)"></div>
+                <h5 class="m-1 mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                             data-target="#collapse@(item.Id)" aria-expanded="false" aria-controls="collapse@(item.Id)">
                         @item.Name
                     </button>
