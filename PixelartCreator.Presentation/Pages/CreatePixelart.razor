@@ -9,40 +9,36 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-sm-4">
-            <p class="text-center display-4">Options</p>
-            
+        <div class="col-sm-4 border p-3">
+            <h4 class="text-center">Options</h4>
+            <hr />
             <EditForm Model="@_options">
-                <div class="d-flex flex-row">
-                    <div class="flex-column p-1">
-                        <label>Unit</label>
-                        <div class="h-100 form-group">
-                            <InputSelect id="unit" class="h-50 form-control align-content-center" @bind-Value="_options.Unit">
-                                <option selected value="@SizeUnit.Pixel">@SizeUnit.Pixel</option>
-                                <option value="@SizeUnit.Map">@SizeUnit.Map</option>
-                            </InputSelect>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="width">Width</label>
+                        <InputNumber id="width" class="form-control" @bind-Value="_options.Width" />
                     </div>
-                    <div class="flex-column p-1">
-                        <label>Width/Height</label>
-                        <div class="form-group">
-                            <InputNumber id="width" class="form-control" @bind-Value="_options.Width" />
-                            <InputNumber id="height" class="form-control" @bind-Value="_options.Height" />
-                        </div>
+                    <div class="form-group col-md-6">
+                        <label for="height">Height</label>
+                        <InputNumber id="height" class="form-control" @bind-Value="_options.Height" />
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label for="unit">Unit</label>
+                    <InputSelect id="unit" class="form-control align-content-center" @bind-Value="_options.Unit">
+                        <option selected value="@SizeUnit.Pixel">@SizeUnit.Pixel</option>
+                        <option value="@SizeUnit.Map">@SizeUnit.Map</option>
+                    </InputSelect>
+                </div>
                 <div class="container">
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-primary w-50" @onclick="SubmitForm" disabled="@_submitDisabled">Submit</button>
                     </div>
                 </div>
-                
             </EditForm>
-            
         </div>
         <div class="col-sm-8">
-            <div class="mt-3 btn-group d-flex">
+            <div class="btn-group d-flex">
                 <button class="flex-fill btn @TabColour(Source)"
                         @onclick="@(() => ChangeActiveTab(Source))">
                     Photo
@@ -53,28 +49,30 @@
                 </button>
             </div>
 
-            @if (_activeTab == Source)
-            {
-                @if (_uploadedFileName != null)
+            <div class="rounded text-center m-3">
+                @if (_activeTab == Source)
                 {
-                    <img class="w-100" src="Images/@_uploadedFileName" />
+                    @if (_uploadedFileName != null)
+                    {
+                        <img src="Images/@_uploadedFileName" />
+                    }
+                    else
+                    {
+                        <p>Upload a photo</p>
+                    }
                 }
-                else
+                else if (_activeTab == Result)
                 {
-                    <p>Upload a photo</p>
+                    @if (_pixelartFileName != null)
+                    {
+                        <img src="Images/@_pixelartFileName" />
+                    }
+                    else
+                    {
+                        <p>Click submit button to create a pixelart</p>
+                    }
                 }
-            }
-            else if (_activeTab == Result)
-            {
-                @if (_pixelartFileName != null)
-                {
-                    <img class="w-100" src="Images/@_pixelartFileName" />
-                }
-                else
-                {
-                    <p>Click submit button to create a pixelart</p>
-                }
-            }
+            </div>
         </div>
     </div>
 </div>
