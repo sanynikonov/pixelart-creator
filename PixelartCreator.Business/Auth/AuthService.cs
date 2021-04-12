@@ -8,37 +8,40 @@ namespace PixelartCreator.Business
 {
     public class AuthService : IAuthService
     {
-        private readonly SignInManager<User> _manager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public AuthService(SignInManager<User> manager)
+        public AuthService(SignInManager<User> manager, UserManager<User> userManager)
         {
-            _manager = manager;
+            _signInManager = manager;
+            _userManager = userManager;
         }
 
         public string GetUserId(ClaimsPrincipal principal)
         {
-            return _manager.UserManager.GetUserId(principal);
+            return _signInManager.UserManager.GetUserId(principal);
         }
 
         public async Task<SignInResult> LoginAsync(LoginModel model)
         {
-            return await _manager.PasswordSignInAsync(model.Login, model.Password, isPersistent: false, lockoutOnFailure: false);
+            var user = await _userManager.FindByNameAsync(model.Login) ?? await _userManager.FindByEmailAsync(model.Login);
+            return await _signInManager.PasswordSignInAsync(user.UserName, model.Password, isPersistent: false, lockoutOnFailure: false);
         }
 
         public async Task LogoutAsync()
         {
-            await _manager.SignOutAsync();
+            await _signInManager.SignOutAsync();
         }
 
         public async Task<IdentityResult> RegisterAsync(RegistrationModel model)
         {
             var user = new User
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email,
             };
 
-            return await _manager.UserManager.CreateAsync(user, model.Password);
+            return await _signInManager.UserManager.CreateAsync(user, model.Password);
         }
     }
 }
