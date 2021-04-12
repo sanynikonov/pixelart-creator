@@ -34,7 +34,7 @@
 
                 <div class="container">
                     <div class="col-md-12 text-center">
-                        <button type="button" class="btn btn-primary w-50" @onclick="BuildPixelart">Submit</button>
+                        <button type="button" class="btn btn-primary w-50" @onclick="SubmitForm" disabled="@_submitDisabled">Submit</button>
                     </div>
                 </div>
                 
@@ -93,6 +93,8 @@
     private string _uploadedFileName;
     private string _pixelartFileName;
 
+    private bool _submitDisabled;
+
     private async Task UploadFile(IFileListEntry[] files)
     {
         var file = files.FirstOrDefault();
@@ -121,6 +123,20 @@
         _options.Width = image.Width;
         _options.Height = image.Height;
         _options.Unit = SizeUnit.Pixel;
+    }
+
+    private async Task SubmitForm()
+    {
+        _submitDisabled = true;
+
+        try
+        {
+            await BuildPixelart();
+        }
+        finally
+        {
+            _submitDisabled = false;
+        }
     }
 
     private async Task BuildPixelart()
