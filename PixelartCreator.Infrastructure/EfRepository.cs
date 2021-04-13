@@ -54,7 +54,7 @@ namespace PixelartCreator.Infrastructure
 
             if (pageNumber.HasValue && pageSize.HasValue)
             {
-                query = query.Skip(pageNumber.Value * pageSize.Value).Take(pageSize.Value);
+                query = query.Skip((pageNumber.Value - 1) * pageSize.Value).Take(pageSize.Value);
             }
 
             return await query.ToListAsync();
