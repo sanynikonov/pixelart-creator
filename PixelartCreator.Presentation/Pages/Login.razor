@@ -25,11 +25,20 @@
 
     private async Task LoginAsync()
     {
-        var result = await AuthService.LoginAsync(_loginModel);
-
-        if (result.Succeeded)
+        try
         {
-            NavigationManager.NavigateTo($"profile");
+            var result = await AuthService.TryLoginAsync(_loginModel);
+
+            if (result == Microsoft.AspNetCore.Identity.SignInResult.Success)
+            {
+                Guid key = Guid.NewGuid();
+                Middlewares.BlazorLoginMiddleware.Logins[key] = new LoginModel { Login = _loginModel.Login, Password = _loginModel.Password };
+                NavigationManager.NavigateTo($"/middlewares/login?key={key}", true);
+            }
+        }
+        catch (Exception e)
+        {
+            throw;
         }
     }
 }

@@ -22,6 +22,13 @@ namespace PixelartCreator.Business
             return _signInManager.UserManager.GetUserId(principal);
         }
 
+        public async Task<SignInResult> TryLoginAsync(LoginModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.Login) ?? await _userManager.FindByEmailAsync(model.Login);
+            return await _signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: false);
+        }
+
+
         public async Task<SignInResult> LoginAsync(LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Login) ?? await _userManager.FindByEmailAsync(model.Login);

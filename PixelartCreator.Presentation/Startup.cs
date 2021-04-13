@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using PixelartCreator.Business;
 using PixelartCreator.Infrastructure;
 using PixelartCreator.Presentation.Data;
+using PixelartCreator.Presentation.Middlewares;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,8 +61,10 @@ namespace PixelartCreator.Presentation
             app.UseRouting();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
+
+            app.UseMiddleware<BlazorLoginMiddleware>();
+            app.UseMiddleware<BlazorLogoutMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

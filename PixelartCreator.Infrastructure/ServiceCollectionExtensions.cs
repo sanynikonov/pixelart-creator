@@ -22,15 +22,19 @@ namespace PixelartCreator.Infrastructure
                 .AddSingleton<IDatabaseSeedDataProvider>(s => new DatabaseSeedDataProvider(rootPath));
 
             services
-                .AddIdentity<User, IdentityRole<int>>(opts => {
+                .AddIdentity<User, IdentityRole<int>>(opts =>
+                {
                     opts.Password.RequiredLength = 5;
                     opts.Password.RequireNonAlphanumeric = false;
                     opts.Password.RequireLowercase = false;
                     opts.Password.RequireUppercase = false;
                     opts.Password.RequireDigit = false;
                 })
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<AppDbContext>();
+            //    .AddDefaultTokenProviders();
+
+            services.AddAuthentication("Identity.Application")
+                .AddCookie();
 
             return services
                 .AddScoped<IRepository, EfRepository>()

@@ -1,7 +1,12 @@
-﻿@page "/logout" 
+﻿@page "/logout"
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 
-<h3>Logout</h3>
+<button class="btn btn-primary" @onclick="LogoutAsync">Logout</button>
 
 @code {
-
+    private async Task LogoutAsync()
+    {
+        NavigationManager.NavigateTo("/middlewares/logout", forceLoad: true);
+    }
 }
