@@ -18,7 +18,25 @@
     }
 </div>
 
+@if (_filter.PageNumber > 1)
+{
+    <button @onclick="async () => await DownloadPageAsync(_filter.PageSize, _filter.PageNumber - 1)"
+            class="btn btn-primary">
+        Previous
+    </button>
+}
+@if (_pixelarts.Count() <= _filter.PageSize)
+{
+    <button @onclick="async () => await DownloadPageAsync(_filter.PageSize, _filter.PageNumber + 1)"
+            class="btn btn-primary">
+        Next
+    </button>
+}
+
 @code {
+    private PageFilter _filter = new PageFilter();
+    private int _userId;
+
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -28,7 +46,15 @@
     {
         var state = await AuthenticationStateTask;
         var id = AuthService.GetUserId(state.User);
+        _userId = int.Parse(id);
 
-        _pixelarts = await PixelartService.GetByUserAsync(int.Parse(id), new PageFilter());
+        await DownloadPageAsync(_filter.PageSize, _filter.PageNumber);
+    }
+
+    private async Task DownloadPageAsync(int pageSize, int pageNumber)
+    {
+        _filter.PageNumber = pageNumber;
+        _filter.PageSize = pageSize;
+        _pixelarts = await PixelartService.GetByUserAsync(_userId, _filter);
     }
 }
