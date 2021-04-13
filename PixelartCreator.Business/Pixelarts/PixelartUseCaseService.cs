@@ -63,6 +63,29 @@ namespace PixelartCreator.Business
             };
         }
 
+        public async Task<IEnumerable<PixelartListItemModel>> GetAsync(PageFilter filter)
+        {
+            var pixelarts = await _repository.GetAsync<Pixelart>(pageNumer: filter.PageNumber, pageSize: filter.PageSize);
+
+            var models = pixelarts.Select(x => new PixelartListItemModel
+            {
+                ResultPath = x.ResultPath,
+                Id = x.Id,
+                CreatedAt = x.CreatedAt,
+                UserId = x.UserId,
+                Description = x.Description,
+                Name = x.Name
+            }).ToList();
+
+            foreach (var item in models)
+            {
+                var user = await _repository.GetAsync<User>(item.UserId);
+                item.UserName = user.UserName;
+            }
+
+            return models;
+        }
+
         public async Task<IEnumerable<PixelartInfoModel>> GetByUserAsync(int userId, PageFilter filter)
         {
             var pixelarts = await _repository.GetAsync<Pixelart>(x => x.UserId == userId, filter.PageNumber, filter.PageSize);

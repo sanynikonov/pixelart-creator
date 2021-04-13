@@ -1,0 +1,28 @@
+﻿@page "/pixelarts"
+@inject IPixelartUseCaseService PixelartService
+@inject IAuthService AuthService
+
+<h3>Peoples Works</h3>
+
+<div class="d-flex flex-wrap">
+    @foreach (var item in _pixelarts)
+    {
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="Images/@item.ResultPath" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">"@item.Name" by @item.UserName</h5>
+                <p class="card-text">@item.Description</p>
+                <p class="card-text">@item.CreatedAt.ToLongDateString()</p>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private IEnumerable<PixelartListItemModel> _pixelarts = new List<PixelartListItemModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _pixelarts = await PixelartService.GetAsync(new PageFilter());
+    }
+}

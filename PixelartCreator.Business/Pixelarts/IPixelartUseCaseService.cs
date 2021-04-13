@@ -12,6 +12,7 @@ namespace PixelartCreator.Business
         Task UpdateAsync(PixelartUpdateModel model);
         Task DeleteAsync(int id);
         Task<IEnumerable<PixelartInfoModel>> GetByUserAsync(int userId, PageFilter filter);
+        Task<IEnumerable<PixelartListItemModel>> GetAsync(PageFilter filter);
         Task<PixelartInfoModel> GetAsync(int id);
     }
 }
