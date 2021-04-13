@@ -58,7 +58,8 @@ namespace PixelartCreator.Business
                 Id = pixelart.Id,
                 CreatedAt = pixelart.CreatedAt,
                 Description = pixelart.Description,
-                UserId = pixelart.UserId
+                UserId = pixelart.UserId,
+                Name = pixelart.Name
             };
         }
 
@@ -73,7 +74,8 @@ namespace PixelartCreator.Business
                 Id = x.Id,
                 CreatedAt = x.CreatedAt,
                 Description = x.Description,
-                UserId = x.UserId
+                UserId = x.UserId,
+                Name = x.Name
             });
         }
 
@@ -85,7 +87,8 @@ namespace PixelartCreator.Business
                 SourcePath = model.SourcePath,
                 Description = model.Description,
                 UserId = model.UserId,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                Name = model.Name
             };
 
             await _repository.AddAsync(pixelart);
@@ -94,7 +97,10 @@ namespace PixelartCreator.Business
         public async Task UpdateAsync(PixelartUpdateModel model)
         {
             var pixelart = await _repository.GetAsync<Pixelart>(model.Id);
+
             pixelart.Description = model.Description;
+            pixelart.Name = model.Name;
+
             await _repository.UpdateAsync(pixelart);
         }
     }

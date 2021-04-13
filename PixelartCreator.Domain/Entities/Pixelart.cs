@@ -13,6 +13,8 @@ namespace PixelartCreator.Domain
 
         public string SourcePath { get; set; }
         public string ResultPath { get; set; }
+
+        public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
     }
