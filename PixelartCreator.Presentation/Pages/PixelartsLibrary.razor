@@ -1,0 +1,34 @@
+﻿@page "/my-library"
+@inject IPixelartUseCaseService PixelartService
+@inject IAuthService AuthService
+
+<h3>My Pixelarts Collection</h3>
+
+<div class="d-flex flex-wrap">
+    @foreach (var item in _pixelarts)
+    {
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="Images/@item.ResultPath" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">"@item.Name"</h5>
+                <p class="card-text">@item.Description</p>
+                <p class="card-text">@item.CreatedAt.ToLongDateString()</p>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    private IEnumerable<PixelartInfoModel> _pixelarts = new List<PixelartInfoModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateTask;
+        var id = AuthService.GetUserId(state.User);
+
+        _pixelarts = await PixelartService.GetByUserAsync(int.Parse(id), new PageFilter());
+    }
+}
