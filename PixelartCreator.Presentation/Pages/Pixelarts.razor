@@ -1,8 +1,9 @@
 ﻿@page "/pixelarts"
 @inject IPixelartUseCaseService PixelartService
 @inject IAuthService AuthService
+@inject NavigationManager NavManager
 
-<h3>Peoples Works</h3>
+<h3>People Works</h3>
 
 <div class="d-flex flex-wrap">
     @foreach (var item in _pixelarts)
@@ -18,11 +19,30 @@
     }
 </div>
 
+@if (_filter.PageNumber > 1)
+{
+    <button @onclick="async () => await DownloadPageAsync(_filter.PageSize, _filter.PageNumber - 1)"
+            class="btn btn-primary">Previous</button>
+}
+@if (_pixelarts.Count() <= _filter.PageSize)
+{
+    <button @onclick="async () => await DownloadPageAsync(_filter.PageSize, _filter.PageNumber + 1)"
+            class="btn btn-primary">Next</button>
+}
+
 @code {
     private IEnumerable<PixelartListItemModel> _pixelarts = new List<PixelartListItemModel>();
+    private PageFilter _filter = new PageFilter();
 
     protected override async Task OnInitializedAsync()
     {
-        _pixelarts = await PixelartService.GetAsync(new PageFilter());
+        await DownloadPageAsync(_filter.PageSize, _filter.PageNumber);
+    }
+
+    private async Task DownloadPageAsync(int pageSize, int pageNumber)
+    {
+        _filter.PageNumber = pageNumber;
+        _filter.PageSize = pageSize;
+        _pixelarts = await PixelartService.GetAsync(_filter);
     }
 }
