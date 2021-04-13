@@ -76,6 +76,10 @@
                         <p>Click submit button to create a pixelart</p>
                     }
                 }
+                @if (PixelartCreated)
+                {
+                    <a class="form-control btn btn-primary w-25 mt-3" href="/download?fileName=@_pixelartFileName">Download</a>
+                }
             </div>
         </div>
     </div>
@@ -87,6 +91,7 @@
     private const string Result = "Result";
 
     private string TabColour(string tabName) => _activeTab == tabName ? "btn-primary" : "btn-secondary";
+    private bool PixelartCreated => _pixelartFileName != null;
 
     private void ChangeActiveTab(string tabName) => _activeTab = tabName;
 
