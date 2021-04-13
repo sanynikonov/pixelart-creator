@@ -78,7 +78,14 @@
                 }
                 @if (PixelartCreated)
                 {
-                    <a class="form-control btn btn-primary w-25 mt-3" href="/download?fileName=@_pixelartFileName">Download</a>
+                    <a class="form-control btn btn-primary w-25 mt-3"
+                       href="/download?fileName=@_pixelartFileName">Download</a>
+                    <AuthorizeView>
+                        <Authorized>
+                            <a href="/pixelarts/save?source=@(_uploadedFileName)&result=@(_pixelartFileName)"
+                               class="form-control btn btn-primary w-25 mt-3">Save to Gallery</a>
+                        </Authorized>
+                    </AuthorizeView>
                 }
             </div>
         </div>

@@ -1,5 +1,4 @@
-﻿@inject AuthenticationStateProvider _authProvider
-@inject NavigationManager NavigationManager
+﻿@inject NavigationManager NavigationManager
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Pixelarts by Sany</a>
@@ -72,14 +71,6 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        var auth = await _authProvider.GetAuthenticationStateAsync();
-
     }
 
     private void ForceLogout()

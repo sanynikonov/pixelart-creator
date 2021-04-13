@@ -1,5 +1,53 @@
-﻿<h3>Save Pixelart</h3>
+﻿@page "/pixelarts/save"
+@inject IPixelartUseCaseService PixelartService
+@inject NavigationManager NavManager
+@inject IAuthService AuthService
+
+<h3>Save Pixelart</h3>
+@_model.SourcePath
+@_model.ResultPath
+<EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <InputText @bind-Value="_model.Name" class="form-control" id="Name" placeholder="Enter pixelart name" />
+        <ValidationMessage For="@(() => _model.Name)" />
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <InputText @bind-Value="_model.Description" class="form-control" id="Description" placeholder="Enter pixelart description" />
+        <ValidationMessage For="@(() => _model.Description)" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
 
 @code {
-    
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    public const string SourcePathParameter = "source";
+    public const string ResultPathParameter = "result";
+
+    private PixelartSaveModel _model = new PixelartSaveModel();
+
+    protected override void OnInitialized()
+    {
+        NavManager.TryGetQueryString<string>(SourcePathParameter, out var sourcePath);
+        NavManager.TryGetQueryString<string>(ResultPathParameter, out var resultPath);
+
+        _model.SourcePath = sourcePath;
+        _model.ResultPath = resultPath;
+    }
+
+    private async Task SubmitFormAsync()
+    {
+        var state = await AuthenticationStateTask;
+
+        var id = AuthService.GetUserId(state.User);
+
+        _model.UserId = int.Parse(id);
+
+        await PixelartService.SaveAsync(_model);
+
+        NavManager.NavigateTo("/");
+    }
 }
