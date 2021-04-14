@@ -21,9 +21,9 @@ namespace PixelartCreator.Business
             return await _repository.GetAsync<Color>(id);
         }
 
-        public async Task<IEnumerable<Color>> GetAsync()
+        public async Task<IEnumerable<int>> GetColorsIdsAsync()
         {
-            return await _repository.GetAsync<Color>();
+            return (await _repository.GetAsync<Color>()).Select(x => x.Id);
         }
 
         public async Task<IEnumerable<ColorLibraryItem>> GetColorsLibraryAsync()

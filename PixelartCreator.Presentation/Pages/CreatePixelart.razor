@@ -155,7 +155,7 @@
 
     private async Task BuildPixelart()
     {
-        var colorsIds = (await _colorService.GetAsync()).Select(x => x.Id);
+        var colorsIds = await _colorService.GetColorsIdsAsync();
 
         var model = new PixelartCreateModel
         {

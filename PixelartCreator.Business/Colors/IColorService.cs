@@ -9,7 +9,7 @@ namespace PixelartCreator.Business
     public interface IColorService
     {
         Task<Color> GetAsync(int id);
-        Task<IEnumerable<Color>> GetAsync();
+        Task<IEnumerable<int>> GetColorsIdsAsync();
         Task<IEnumerable<ColorLibraryItem>> GetColorsLibraryAsync();
     }
 }
