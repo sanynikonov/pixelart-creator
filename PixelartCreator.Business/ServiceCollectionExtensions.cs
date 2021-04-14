@@ -15,7 +15,7 @@ namespace PixelartCreator.Business
             return services
                 .AddScoped<IAuthService, AuthService>()
                 .AddScoped<IColorService, ColorService>()
-                .AddScoped<IPixelartUseCaseService, PixelartUseCaseService>()
+                .AddScoped<IPixelartService, PixelartService>()
                 .AddScoped<IPresentationUnitService, PresentationUnitService>()
                 .AddScoped<IUserService, UserService>();
         }

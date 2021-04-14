@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PixelartCreator.Business
 {
-    public interface IPixelartUseCaseService
+    public interface IPixelartService
     {
         Task<PixelartCreationResultModel> CreateAsync(PixelartCreateModel model);
         Task SaveAsync(PixelartSaveModel model);

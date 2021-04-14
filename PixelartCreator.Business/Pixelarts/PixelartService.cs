@@ -9,13 +9,13 @@ using Color = PixelartCreator.Domain.Color;
 
 namespace PixelartCreator.Business
 {
-    public class PixelartUseCaseService : IPixelartUseCaseService
+    public class PixelartService : IPixelartService
     {
         private readonly IImageStorage _storage;
         private readonly IRepository _repository;
         private readonly IPixelartGenerator _pixelartGenerator;
 
-        public PixelartUseCaseService(IImageStorage storage, IRepository repository, IPixelartGenerator pixelartGenerator)
+        public PixelartService(IImageStorage storage, IRepository repository, IPixelartGenerator pixelartGenerator)
         {
             _storage = storage;
             _repository = repository;
