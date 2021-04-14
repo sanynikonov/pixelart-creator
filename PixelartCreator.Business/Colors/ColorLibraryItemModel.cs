@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace PixelartCreator.Business
 {
-    public class ColorLibraryItem
+    public class ColorLibraryItemModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

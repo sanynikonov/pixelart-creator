@@ -10,6 +10,6 @@ namespace PixelartCreator.Business
     {
         Task<Color> GetAsync(int id);
         Task<IEnumerable<int>> GetColorsIdsAsync();
-        Task<IEnumerable<ColorLibraryItem>> GetColorsLibraryAsync();
+        Task<IEnumerable<ColorLibraryItemModel>> GetColorsLibraryAsync();
     }
 }

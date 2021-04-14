@@ -26,11 +26,11 @@ namespace PixelartCreator.Business
             return (await _repository.GetAsync<Color>()).Select(x => x.Id);
         }
 
-        public async Task<IEnumerable<ColorLibraryItem>> GetColorsLibraryAsync()
+        public async Task<IEnumerable<ColorLibraryItemModel>> GetColorsLibraryAsync()
         {
             var entities = await _repository.GetAsync<Color>();
 
-            var items = entities.Select(x => new ColorLibraryItem
+            var items = entities.Select(x => new ColorLibraryItemModel
             {
                 Id = x.Id,
                 Name = x.Name,
