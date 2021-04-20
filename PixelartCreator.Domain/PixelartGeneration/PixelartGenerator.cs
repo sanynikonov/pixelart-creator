@@ -43,7 +43,7 @@ namespace PixelartCreator.Domain
             var sizeDiffers = options.Size.Height != image.Pixels.GetLength(0)
                 && options.Size.Width != image.Pixels.GetLength(1);
 
-            if (sizeDiffers || options.Size == default)
+            if (sizeDiffers && options.Size != default)
             {
                 var bitmap = new Bitmap(BitmapConverter.FromColorsMatrix(image.Pixels), options.Size);
                 return BitmapConverter.ToColorsMatrix(bitmap);
