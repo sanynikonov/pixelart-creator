@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-using ClassColor = PixelartCreator.Domain.Color;
-using StructColor = System.Drawing.Color;
+using SColor = System.Drawing.Color;
 using System.Drawing;
 using System;
 
@@ -22,11 +21,11 @@ namespace PixelartCreator.Domain
         public Image CreatePixelart(Image image, PixelizingOptions options)
         {
             var availibleColors = options.AvailibleColors;
-            var cache = new Dictionary<StructColor, StructColor>();
+            var cache = new Dictionary<SColor, SColor>();
 
             var pixels = Resize(image, options);
 
-            var result = new StructColor[pixels.GetLength(0), pixels.GetLength(1)];
+            var result = new SColor[pixels.GetLength(0), pixels.GetLength(1)];
 
             for (int y = 0; y < pixels.GetLength(0); y++)
             {
@@ -39,7 +38,7 @@ namespace PixelartCreator.Domain
             return new Image { Pixels = result };
         }
 
-        private static StructColor[,] Resize(Image image, PixelizingOptions options)
+        private static SColor[,] Resize(Image image, PixelizingOptions options)
         {
             var sizeDiffers = options.Size.Height != image.Pixels.GetLength(0)
                 && options.Size.Width != image.Pixels.GetLength(1);
@@ -53,7 +52,7 @@ namespace PixelartCreator.Domain
             return image.Pixels;
         }
 
-        private StructColor FindMostSuitableAvailibleColor(StructColor color, IEnumerable<StructColor> _availibleColors, Dictionary<StructColor, StructColor> _cachedColors)
+        private SColor FindMostSuitableAvailibleColor(SColor color, IEnumerable<SColor> _availibleColors, Dictionary<SColor, SColor> _cachedColors)
         {
             if (_cachedColors.TryGetValue(color, out var neighbour))
             {
@@ -68,14 +67,14 @@ namespace PixelartCreator.Domain
             return neighbour;
         }
 
-        public static double DistanceToNeighbour(StructColor c1, StructColor c2)
+        public static double DistanceToNeighbour(SColor c1, SColor c2)
             => 30 * Math.Pow(c2.R - c1.R, 2) + 59 * Math.Pow(c2.G - c1.G, 2) + 11 * Math.Pow(c2.B - c1.B, 2);
 
         public Image TransformPixelsToMinecraftBlocks(Image image, TransformOptions options)
         {
-            var cachedPixels = new Dictionary<StructColor, Image>();
+            var cachedPixels = new Dictionary<SColor, Image>();
 
-            var result = new StructColor[image.Pixels.GetLength(0) * TextureSize, image.Pixels.GetLength(1) * TextureSize];
+            var result = new SColor[image.Pixels.GetLength(0) * TextureSize, image.Pixels.GetLength(1) * TextureSize];
 
             for (int y = 0; y < image.Pixels.GetLength(0); y++)
             {
@@ -92,14 +91,14 @@ namespace PixelartCreator.Domain
             return new Image { Pixels = result};
         }
 
-        private Image GetTexture(StructColor color, Dictionary<StructColor, Image> cache, IEnumerable<MinecraftBlock> blocks)
+        private Image GetTexture(SColor color, Dictionary<SColor, Image> cache, IEnumerable<MinecraftBlock> blocks)
         {
             if (cache.ContainsKey(color))
             {
                 return cache[color];
             }
 
-            var block = blocks.First(x => StructColor
+            var block = blocks.First(x => SColor
                 .FromArgb(x.MapColor.A, x.MapColor.R, x.MapColor.G, x.MapColor.B)
                 .Equals(color));
 
@@ -110,7 +109,7 @@ namespace PixelartCreator.Domain
             return texture;
         }
 
-        private void FillTextureOnResult(StructColor[,] result, int x, int y, StructColor[,] texture)
+        private void FillTextureOnResult(SColor[,] result, int x, int y, SColor[,] texture)
         {
             for (int yOffset = 0; yOffset < TextureSize; yOffset++)
             {
