@@ -21,11 +21,10 @@ namespace PixelartCreator.Domain
 
         public Image CreatePixelart(Image image, PixelizingOptions options)
         {
-            var _availibleColors = options.AvailibleColors;
+            var availibleColors = options.AvailibleColors;
             var cache = new Dictionary<StructColor, StructColor>();
 
-            var bitmap = new Bitmap(BitmapConverter.FromColorsMatrix(image.Pixels), options.Size);
-            var pixels = BitmapConverter.ToColorsMatrix(bitmap);
+            var pixels = Resize(image, options);
 
             var result = new StructColor[pixels.GetLength(0), pixels.GetLength(1)];
 
@@ -33,11 +32,25 @@ namespace PixelartCreator.Domain
             {
                 for (int x = 0; x < pixels.GetLength(1); x++)
                 {
-                    result[y, x] = FindMostSuitableAvailibleColor(pixels[y, x], _availibleColors, cache);
+                    result[y, x] = FindMostSuitableAvailibleColor(pixels[y, x], availibleColors, cache);
                 }
             }
 
             return new Image { Pixels = result };
+        }
+
+        private static StructColor[,] Resize(Image image, PixelizingOptions options)
+        {
+            var sizeDiffers = options.Size.Height != image.Pixels.GetLength(0)
+                && options.Size.Width != image.Pixels.GetLength(1);
+
+            if (sizeDiffers || options.Size == default)
+            {
+                var bitmap = new Bitmap(BitmapConverter.FromColorsMatrix(image.Pixels), options.Size);
+                return BitmapConverter.ToColorsMatrix(bitmap);
+            }
+
+            return image.Pixels;
         }
 
         private StructColor FindMostSuitableAvailibleColor(StructColor color, IEnumerable<StructColor> _availibleColors, Dictionary<StructColor, StructColor> _cachedColors)
