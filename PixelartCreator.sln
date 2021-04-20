@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Business", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Presentation", "PixelartCreator.Presentation\PixelartCreator.Presentation.csproj", "{805A7264-6BEA-440B-A339-4951FE0AEC79}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{020203EB-08C9-4298-BFBD-A332D2FEAAFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C9F84382-8710-4895-B698-F45E3F1C95AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelartCreator.Domain.Tests", "PixelartCreator.Domain.Tests\PixelartCreator.Domain.Tests.csproj", "{22149F5F-061F-472B-BF30-B66AE4C1496D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +39,20 @@ Global
 		{805A7264-6BEA-440B-A339-4951FE0AEC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{805A7264-6BEA-440B-A339-4951FE0AEC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{805A7264-6BEA-440B-A339-4951FE0AEC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22149F5F-061F-472B-BF30-B66AE4C1496D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22149F5F-061F-472B-BF30-B66AE4C1496D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22149F5F-061F-472B-BF30-B66AE4C1496D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22149F5F-061F-472B-BF30-B66AE4C1496D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E0F3C25-F7D9-4704-B9E0-CC8B5DF43C0F} = {C9F84382-8710-4895-B698-F45E3F1C95AF}
+		{98846036-23DC-41CA-B1B7-32FAE05550A6} = {C9F84382-8710-4895-B698-F45E3F1C95AF}
+		{46C96895-6994-4358-ACFE-B3CA8F7DC2E4} = {C9F84382-8710-4895-B698-F45E3F1C95AF}
+		{805A7264-6BEA-440B-A339-4951FE0AEC79} = {C9F84382-8710-4895-B698-F45E3F1C95AF}
+		{22149F5F-061F-472B-BF30-B66AE4C1496D} = {020203EB-08C9-4298-BFBD-A332D2FEAAFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7E6F62EE-D804-4D1D-8EAC-408A28EEC38E}
