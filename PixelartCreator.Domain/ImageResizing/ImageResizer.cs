@@ -9,6 +9,16 @@ namespace PixelartCreator.Domain
     {
         public Image Resize(Image image, Size size)
         {
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
+            }
+
+            if (size.Width <= 0 || size.Height <= 0)
+            {
+                throw new ArgumentException("Size should contain only positive numbers", nameof(size));
+            }
+
             var sizeDiffers = size.Height != image.Pixels.GetLength(0)
                 && size.Width != image.Pixels.GetLength(1);
 
