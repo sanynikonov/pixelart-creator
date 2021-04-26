@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PixelartCreator.Domain
 {
-    public class TransformOptions
+    public class TransformingOptions
     {
         public IEnumerable<MinecraftBlock> AvailibleBlocks { get; set; }
     }

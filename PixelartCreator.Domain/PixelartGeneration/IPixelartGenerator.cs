@@ -7,6 +7,5 @@ namespace PixelartCreator.Domain
     public interface IPixelartGenerator
     {
         Image CreatePixelart(Image image, PixelizingOptions options);
-        Image TransformPixelsToMinecraftBlocks(Image image, TransformOptions options);
     }
 }
