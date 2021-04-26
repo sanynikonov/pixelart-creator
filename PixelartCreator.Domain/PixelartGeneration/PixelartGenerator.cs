@@ -12,7 +12,6 @@ namespace PixelartCreator.Domain
         private const int TextureSize = 16;
         private readonly IImageStorage _storage;
 
-
         public PixelartGenerator(IImageStorage storage)
         {
             _storage = storage;
@@ -52,14 +51,14 @@ namespace PixelartCreator.Domain
             return image.Pixels;
         }
 
-        private SColor FindMostSuitableAvailibleColor(SColor color, IEnumerable<SColor> _availibleColors, Dictionary<SColor, SColor> _cachedColors)
+        private SColor FindMostSuitableAvailibleColor(SColor color, IEnumerable<SColor> availibleColors, Dictionary<SColor, SColor> _cachedColors)
         {
             if (_cachedColors.TryGetValue(color, out var neighbour))
             {
                 return neighbour;
             }
 
-            var distances = _availibleColors.Select(c => new { Neighbour = c, Distance = DistanceToNeighbour(color, c) });
+            var distances = availibleColors.Select(c => new { Neighbour = c, Distance = DistanceToNeighbour(color, c) });
             var minDistance = distances.Min(x => x.Distance);
             neighbour = distances.First(x => x.Distance == minDistance).Neighbour;
 
