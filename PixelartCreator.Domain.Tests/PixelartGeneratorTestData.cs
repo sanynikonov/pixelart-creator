@@ -5,7 +5,7 @@ using SColor = System.Drawing.Color;
 
 namespace PixelartCreator.Domain.Tests
 {
-    public class PixelartGeneratorTestsData
+    public class PixelartGeneratorTestData
     {
         private static readonly SColor Water = SColor.FromArgb(64, 64, 255);
         private static readonly SColor Wood = SColor.FromArgb(143, 119, 72);

@@ -8,18 +8,18 @@ using Xunit;
 
 namespace PixelartCreator.Domain.Tests
 {
-    public class PixelartGeneratorTests
+    public class PixelartGeneratorTest
     {
         private readonly Mock<IImageStorage> _mockStorage = new Mock<IImageStorage>();
         private readonly IPixelartGenerator _generator;
 
-        public PixelartGeneratorTests()
+        public PixelartGeneratorTest()
         {
             _generator = new PixelartGenerator(_mockStorage.Object);
         }
 
         [Theory]
-        [MemberData(nameof(PixelartGeneratorTestsData.CreateTestData), MemberType = typeof(PixelartGeneratorTestsData))]
+        [MemberData(nameof(PixelartGeneratorTestData.CreateTestData), MemberType = typeof(PixelartGeneratorTestData))]
         public void CreatePixelart_FromImage_ReturnsAnother(PixelizingOptions options, Image image, SColor[,] expected)
         {
             var actual = _generator.CreatePixelart(image, options).Pixels;
