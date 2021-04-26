@@ -9,12 +9,19 @@ namespace PixelartCreator.Domain
 {
     public class PixelartGenerator : IPixelartGenerator
     {
+        private IImageResizer _imageResizer;
+
+        public PixelartGenerator(IImageResizer imageResizer)
+        {
+            _imageResizer = imageResizer;
+        }
+
         public Image CreatePixelart(Image image, PixelizingOptions options)
         {
             var availibleColors = options.AvailibleColors;
             var cache = new Dictionary<SColor, SColor>();
 
-            var pixels = Resize(image, options);
+            var pixels = _imageResizer.Resize(image, options.Size).Pixels;
 
             var result = new SColor[pixels.GetLength(0), pixels.GetLength(1)];
 
@@ -27,20 +34,6 @@ namespace PixelartCreator.Domain
             }
 
             return new Image { Pixels = result };
-        }
-
-        private static SColor[,] Resize(Image image, PixelizingOptions options)
-        {
-            var sizeDiffers = options.Size.Height != image.Pixels.GetLength(0)
-                && options.Size.Width != image.Pixels.GetLength(1);
-
-            if (sizeDiffers && options.Size != default)
-            {
-                var bitmap = new Bitmap(BitmapConverter.FromColorsMatrix(image.Pixels), options.Size);
-                return BitmapConverter.ToColorsMatrix(bitmap);
-            }
-
-            return image.Pixels;
         }
 
         private SColor FindMostSuitableAvailibleColor(SColor color, IEnumerable<SColor> availibleColors, Dictionary<SColor, SColor> _cachedColors)
