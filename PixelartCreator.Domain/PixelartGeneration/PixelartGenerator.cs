@@ -18,7 +18,18 @@ namespace PixelartCreator.Domain
 
         public Image CreatePixelart(Image image, PixelizingOptions options)
         {
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
+            }
+            
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             var availibleColors = options.AvailibleColors;
+
             var cache = new Dictionary<SColor, SColor>();
 
             var pixels = _imageResizer.Resize(image, options.Size).Pixels;
