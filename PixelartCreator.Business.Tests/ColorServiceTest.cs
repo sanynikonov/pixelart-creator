@@ -47,7 +47,7 @@ namespace PixelartCreator.Business.Tests
 
             _repositoryMock.Setup(r => r.GetAsync(
                 It.IsAny<Expression<Func<MinecraftBlock, bool>>>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .ReturnsAsync(blocks);
+                .ReturnsAsync((Expression<Func<MinecraftBlock, bool>> pred, int? _, int? asd) => blocks.Where(pred.Compile()));
 
             var actual = await _service.GetColorsLibraryAsync();
 
