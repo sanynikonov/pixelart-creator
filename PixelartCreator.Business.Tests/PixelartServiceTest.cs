@@ -144,7 +144,7 @@ namespace PixelartCreator.Business.Tests
 
             var model = await _service.GetAsync(pixelart.Id);
 
-            _repositoryMock.Verify(r => r.UpdateAsync(It.Is<Pixelart>(p => PixelartAndModelAreEqual(p, model))));
+            PixelartAndModelAreEqual(pixelart, model);
         }
 
         [Fact]
@@ -179,12 +179,11 @@ namespace PixelartCreator.Business.Tests
                 It.IsAny<Expression<Func<Pixelart, bool>>>(), It.IsAny<int?>(), It.IsAny<int?>()))
                 .ReturnsAsync(pixelarts);
 
+            _repositoryMock.Setup(r => r.GetAsync<User>(It.IsAny<int>())).ReturnsAsync(new User());
+
             var models = await _service.GetAsync(filter);
 
-            foreach (var model in models)
-            {
-                _repositoryMock.Verify(r => r.UpdateAsync(It.Is<Pixelart>(p => PixelartAndModelAreEqual(p, model))));
-            }
+            PixelartAndModelAreEqual(pixelarts, models.ToArray());
         }
 
         private bool PixelartAndModelAreEqual(Pixelart pixelart, PixelartSaveModel model)
@@ -203,25 +202,33 @@ namespace PixelartCreator.Business.Tests
                 && pixelart.Id == model.Id;
         }
 
-        private bool PixelartAndModelAreEqual(Pixelart pixelart, PixelartInfoModel model)
+        private void PixelartAndModelAreEqual(Pixelart pixelart, PixelartInfoModel model)
         {
-            return pixelart.Name == model.Name
-                && pixelart.Description == model.Description
-                && pixelart.ResultPath == model.ResultPath
-                && pixelart.SourcePath == model.SourcePath
-                && pixelart.UserId == model.UserId
-                && pixelart.Id == model.Id
-                && pixelart.CreatedAt == model.CreatedAt;
+            Assert.Equal(pixelart.Name, model.Name);
+            Assert.Equal(pixelart.Description, model.Description);
+            Assert.Equal(pixelart.ResultPath, model.ResultPath);
+            Assert.Equal(pixelart.SourcePath, model.SourcePath);
+            Assert.Equal(pixelart.UserId, model.UserId);
+            Assert.Equal(pixelart.Id, model.Id);
+            Assert.Equal(pixelart.CreatedAt, model.CreatedAt);
         }
 
-        private bool PixelartAndModelAreEqual(Pixelart pixelart, PixelartListItemModel model)
+        private void PixelartAndModelAreEqual(Pixelart pixelart, PixelartListItemModel model)
         {
-            return pixelart.Name == model.Name
-                && pixelart.Description == model.Description
-                && pixelart.ResultPath == model.ResultPath
-                && pixelart.UserId == model.UserId
-                && pixelart.Id == model.Id
-                && pixelart.CreatedAt == model.CreatedAt;
+            Assert.Equal(pixelart.Name, model.Name);
+            Assert.Equal(pixelart.Description, model.Description);
+            Assert.Equal(pixelart.ResultPath, model.ResultPath);
+            Assert.Equal(pixelart.UserId, model.UserId);
+            Assert.Equal(pixelart.Id, model.Id);
+            Assert.Equal(pixelart.CreatedAt, model.CreatedAt);
+        }
+
+        private void PixelartAndModelAreEqual(Pixelart[] pixelarts, PixelartListItemModel[] models)
+        {
+            for (int i = 0; i < pixelarts.Length; i++)
+            {
+                PixelartAndModelAreEqual(pixelarts[i], models[i]);
+            }
         }
     }
 }
