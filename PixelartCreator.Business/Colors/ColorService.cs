@@ -30,21 +30,21 @@ namespace PixelartCreator.Business
         {
             var entities = await _repository.GetAsync<Color>();
 
-            var items = entities.Select(x => new ColorLibraryItemModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                A = x.A,
-                B = x.B,
-                G = x.G,
-                R = x.R
-            }).ToList();
+            var items = entities.Select(x =>
+                new ColorLibraryItemModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    A = x.A,
+                    B = x.B,
+                    G = x.G,
+                    R = x.R
+                }).ToList();
 
             foreach (var item in items)
             {
                 var id = item.Id;
-                var blocks = await _repository
-                    .GetAsync<MinecraftBlock>(x => x.ColorId == id);
+                var blocks = await _repository.GetAsync<MinecraftBlock>(x => x.ColorId == id);
                 item.BlocksNames = blocks.Select(x => x.Name);
             }
 
