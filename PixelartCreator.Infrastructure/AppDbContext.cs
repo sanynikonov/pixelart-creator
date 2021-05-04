@@ -25,7 +25,7 @@ namespace PixelartCreator.Infrastructure
         {
             base.OnModelCreating(builder);
 
-            _provider.Seed(builder);
+            _provider?.Seed(builder);
         }
     }
 }
