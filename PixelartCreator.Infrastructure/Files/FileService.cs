@@ -23,8 +23,7 @@ namespace PixelartCreator.Infrastructure
         public Image GetImage(string relativePath)
         {
             var fullPath = GetImageFullPath(relativePath);
-            var image = System.Drawing.Image.FromFile(fullPath);
-            using var bitmap = new Bitmap(image);
+            using var bitmap = new Bitmap(fullPath);
             var pixels = BitmapConverter.ToColorsMatrix(bitmap);
             return new Image { Pixels = pixels };
         }
@@ -70,9 +69,12 @@ namespace PixelartCreator.Infrastructure
             return DateTime.Now.ToString("ddMMyyyyTHHmmss") + "-" + GetRandomString(8) + "-" + name;
         }
 
-        private string ShortenFileName(string fileName)
+        private string ShortenFileName(string path)
         {
-            return Path.GetFileName(fileName).Substring(0, 71) + Path.GetExtension(fileName);
+            const int maxLength = 71;
+            var fileName = Path.GetFileNameWithoutExtension(path);
+            var nameLength = fileName.Length < maxLength ? fileName.Length : maxLength;
+            return fileName.Substring(0, nameLength) + Path.GetExtension(path);
         }
 
         private string GetRandomString(int length)
