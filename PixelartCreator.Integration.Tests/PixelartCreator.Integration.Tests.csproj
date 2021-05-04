@@ -19,4 +19,14 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PixelartCreator.Business\PixelartCreator.Business.csproj" />
+    <ProjectReference Include="..\PixelartCreator.Infrastructure\PixelartCreator.Infrastructure.csproj" />
+    <ProjectReference Include="..\PixelartCreator.Presentation\PixelartCreator.Presentation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestData\" />
+  </ItemGroup>
+
 </Project>
