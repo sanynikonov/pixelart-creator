@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+
+  pixelart-creator:
+    image: ${DOCKER_REGISTRY-}pixelart-creator
+    build:
+      context: .
+      dockerfile: PixelartCreator.Presentation/Dockerfile
+
+  sql:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+      SA_PASSWORD: P$ssw0rd
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1433:1433
+    volumes:
+      - sql-data:/var/opt/mssql/data
+
+volumes:
+  sql-data:
