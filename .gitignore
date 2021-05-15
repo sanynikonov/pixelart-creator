@@ -349,5 +349,14 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+#---------------------------------------------------------
+# Custom definitions
+
+# Sketches of Blazor GUI
 ui-sketches/
+
+# Uploaded and processed images
 src/PixelartCreator.Presentation/wwwroot/Images
+
+# Docker database data
+deploy/docker/db-data
