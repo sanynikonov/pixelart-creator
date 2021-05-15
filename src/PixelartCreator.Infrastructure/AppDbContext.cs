@@ -19,6 +19,7 @@ namespace PixelartCreator.Infrastructure
         public AppDbContext(DbContextOptions<AppDbContext> options, IDatabaseSeedDataProvider provider) : base(options)
         {
             _provider = provider;
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

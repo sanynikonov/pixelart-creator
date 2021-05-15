@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{020203EB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C9F84382-8710-4895-B698-F45E3F1C95AF}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "deploy\docker\docker-compose.dcproj", "{A365AE75-ECCF-4516-9423-0EFF0921ECB1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Business.Tests", "tests\PixelartCreator.Business.Tests\PixelartCreator.Business.Tests.csproj", "{DB1227F3-F8A8-463D-A0A0-B38814DEAA4D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Domain.Tests", "tests\PixelartCreator.Domain.Tests\PixelartCreator.Domain.Tests.csproj", "{A7CAAC10-C021-4847-B3C4-7387D63A4496}"
@@ -23,16 +21,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelartCreator.Presentation", "src\PixelartCreator.Presentation\PixelartCreator.Presentation.csproj", "{77CF3D5A-021D-462B-8F69-24D4282A321C}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "deploy\docker\docker-compose.dcproj", "{A365AE75-ECCF-4516-9423-0EFF0921ECB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB1227F3-F8A8-463D-A0A0-B38814DEAA4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB1227F3-F8A8-463D-A0A0-B38814DEAA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB1227F3-F8A8-463D-A0A0-B38814DEAA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +57,10 @@ Global
 		{77CF3D5A-021D-462B-8F69-24D4282A321C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77CF3D5A-021D-462B-8F69-24D4282A321C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77CF3D5A-021D-462B-8F69-24D4282A321C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A365AE75-ECCF-4516-9423-0EFF0921ECB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

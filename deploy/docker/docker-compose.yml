@@ -6,17 +6,19 @@ services:
     image: ${DOCKER_REGISTRY-}pixelart-creator
     build:
       context: .
-      dockerfile: PixelartCreator.Presentation/Dockerfile
+      dockerfile: ../../src/PixelartCreator.Presentation/Dockerfile
+    ports:
+      - 80:80
 
-  sql:
+  db:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
     environment:
-      SA_PASSWORD: P$ssw0rd
-      ACCEPT_EULA: "Y"
+      SA_PASSWORD: 'P$$ssw0rd' #idk why, but there should be two $ instead of 1
+      ACCEPT_EULA: 'Y'
     ports:
       - 1433:1433
-    volumes:
-      - sql-data:/var/opt/mssql/data
+    #volumes:
+    #  - sql-data:/var/opt/mssql/data
 
 volumes:
   sql-data:

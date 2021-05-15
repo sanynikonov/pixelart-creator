@@ -7,13 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["PixelartCreator.Presentation/PixelartCreator.Presentation.csproj", "PixelartCreator.Presentation/"]
-COPY ["PixelartCreator.Infrastructure/PixelartCreator.Infrastructure.csproj", "PixelartCreator.Infrastructure/"]
-COPY ["PixelartCreator.Domain/PixelartCreator.Domain.csproj", "PixelartCreator.Domain/"]
-COPY ["PixelartCreator.Business/PixelartCreator.Business.csproj", "PixelartCreator.Business/"]
-RUN dotnet restore "PixelartCreator.Presentation/PixelartCreator.Presentation.csproj"
+COPY ["src/PixelartCreator.Presentation/PixelartCreator.Presentation.csproj", "src/PixelartCreator.Presentation/"]
+COPY ["src/PixelartCreator.Infrastructure/PixelartCreator.Infrastructure.csproj", "src/PixelartCreator.Infrastructure/"]
+COPY ["src/PixelartCreator.Domain/PixelartCreator.Domain.csproj", "src/PixelartCreator.Domain/"]
+COPY ["src/PixelartCreator.Business/PixelartCreator.Business.csproj", "src/PixelartCreator.Business/"]
+RUN dotnet restore "src/PixelartCreator.Presentation/PixelartCreator.Presentation.csproj"
 COPY . .
-WORKDIR "/src/PixelartCreator.Presentation"
+WORKDIR "/src/src/PixelartCreator.Presentation"
 RUN dotnet build "PixelartCreator.Presentation.csproj" -c Release -o /app/build
 
 FROM build AS publish
