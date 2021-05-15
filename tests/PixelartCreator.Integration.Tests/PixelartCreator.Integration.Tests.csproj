@@ -23,13 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PixelartCreator.Business\PixelartCreator.Business.csproj" />
-    <ProjectReference Include="..\PixelartCreator.Infrastructure\PixelartCreator.Infrastructure.csproj" />
-    <ProjectReference Include="..\PixelartCreator.Presentation\PixelartCreator.Presentation.csproj" />
+    <Folder Include="TestData\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestData\" />
+    <ProjectReference Include="..\..\src\PixelartCreator.Business\PixelartCreator.Business.csproj" />
+    <ProjectReference Include="..\..\src\PixelartCreator.Domain\PixelartCreator.Domain.csproj" />
+    <ProjectReference Include="..\..\src\PixelartCreator.Infrastructure\PixelartCreator.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -24,7 +24,11 @@ namespace PixelartCreator.Domain.Tests
         public void CreatePixelart_ImageIsNull_ThrowsException()
         {
             Image image = null;
-            var options = _fixture.Create<PixelizingOptions>();
+            var options = new PixelizingOptions
+            {
+                AvailibleColors = new[] { SColor.White, SColor.Black },
+                Size = new Size(100, 200)
+            };
 
             void Action() => _generator.CreatePixelart(image, options);
 

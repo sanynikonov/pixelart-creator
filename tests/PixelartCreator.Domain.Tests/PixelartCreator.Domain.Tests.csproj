@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PixelartCreator.Domain\PixelartCreator.Domain.csproj" />
+    <ProjectReference Include="..\..\src\PixelartCreator.Domain\PixelartCreator.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -21,16 +21,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PixelartCreator.Business\PixelartCreator.Business.csproj" />
-    <ProjectReference Include="..\PixelartCreator.Infrastructure\PixelartCreator.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Pages\CreatePixelart.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PixelartCreator.Business\PixelartCreator.Business.csproj" />
+    <ProjectReference Include="..\PixelartCreator.Infrastructure\PixelartCreator.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

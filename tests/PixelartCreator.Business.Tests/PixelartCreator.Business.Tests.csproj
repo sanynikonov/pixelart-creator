@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PixelartCreator.Business\PixelartCreator.Business.csproj" />
-    <ProjectReference Include="..\PixelartCreator.Domain\PixelartCreator.Domain.csproj" />
+    <ProjectReference Include="..\..\src\PixelartCreator.Business\PixelartCreator.Business.csproj" />
+    <ProjectReference Include="..\..\src\PixelartCreator.Domain\PixelartCreator.Domain.csproj" />
   </ItemGroup>
 
 </Project>
