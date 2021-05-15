@@ -17,8 +17,5 @@ services:
       ACCEPT_EULA: 'Y'
     ports:
       - 1433:1433
-    #volumes:
-    #  - sql-data:/var/opt/mssql/data
-
-volumes:
-  sql-data:
+    volumes:
+      - ./db-data:/var/opt/mssql/data
