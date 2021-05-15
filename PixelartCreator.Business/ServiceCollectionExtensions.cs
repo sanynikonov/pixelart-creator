@@ -10,7 +10,9 @@ namespace PixelartCreator.Business
     {
         public static IServiceCollection AddBusinessServices(this IServiceCollection services)
         {
-            services.AddScoped<IPixelartGenerator, PixelartGenerator>();
+            services
+                .AddScoped<IPixelartGenerator, PixelartGenerator>()
+                .AddScoped<IImageResizer, ImageResizer>();
 
             return services
                 .AddScoped<IAuthService, AuthService>()
