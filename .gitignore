@@ -350,4 +350,4 @@ MigrationBackup/
 .ionide/
 
 ui-sketches/
-PixelartCreator.Presentation/wwwroot/Images
+src/PixelartCreator.Presentation/wwwroot/Images
