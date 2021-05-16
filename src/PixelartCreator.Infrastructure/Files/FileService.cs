@@ -18,6 +18,12 @@ namespace PixelartCreator.Infrastructure
         {
             _rootPath = rootPath;
             _random = new Random();
+
+            var directory = Path.Combine(rootPath, ImageFolder);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
         }
 
         public Image GetImage(string relativePath)
