@@ -12,7 +12,8 @@ namespace PixelartCreator.Business
         {
             services
                 .AddScoped<IPixelartGenerator, PixelartGenerator>()
-                .AddScoped<IImageResizer, ImageResizer>();
+                .AddScoped<IImageResizer, ImageResizer>()
+                .AddScoped<IPresentationUnitMentionsCounter, PresentationUnitMentionsCounter>();
 
             return services
                 .AddScoped<IAuthService, AuthService>()

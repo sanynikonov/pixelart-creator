@@ -13,10 +13,11 @@ namespace PixelartCreator.Business
         private readonly IImageStorage _storage;
         private readonly IPresentationUnitMentionsCounter _counter;
 
-        public PresentationUnitService(IRepository repository, IImageStorage imageStorage)
+        public PresentationUnitService(IRepository repository, IImageStorage imageStorage, IPresentationUnitMentionsCounter counter)
         {
             _repository = repository;
             _storage = imageStorage;
+            _counter = counter;
         }
 
         public async Task<IEnumerable<BlockMentionsCount>> CountBlocksMentionsFromImageAsync(CountBlocksMentionsModel model)
