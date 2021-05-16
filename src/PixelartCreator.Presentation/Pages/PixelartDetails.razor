@@ -15,7 +15,7 @@
     @foreach (var item in _mentions)
     {
         <div class="d-flex flex-row h-100" style="width: 20%">
-            <div class="m-1 border" style="height: 30px; width: 30px; background-color: rgb(@item.R, @item.G, @item.B)"></div>
+            <a href="colors?selected=@item.Id"><div class="m-1 border" style="height: 30px; width: 30px; background-color: rgb(@item.R, @item.G, @item.B)"></div></a>
             <div class="flex-grow-1 ml-3 justify-content-center align-self-center">x<span>@item.MentionsCount</span></div>
         </div>
     }
