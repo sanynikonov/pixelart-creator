@@ -20,14 +20,13 @@ namespace PixelartCreator.Presentation
 
         public static IWebHostBuilder CreateHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    var env = hostingContext.HostingEnvironment;
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                    config.AddEnvironmentVariables();
-                })
+                //.ConfigureAppConfiguration((hostingContext, config) =>
+                //{
+                //    var env = hostingContext.HostingEnvironment;
+                //    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                //          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                //    config.AddEnvironmentVariables();
+                //})
                 .UseStartup<Startup>();
     }
 }
