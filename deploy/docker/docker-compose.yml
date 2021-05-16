@@ -7,8 +7,9 @@ services:
     build:
       context: .
       dockerfile: ../../src/PixelartCreator.Presentation/Dockerfile
-    ports:
-      - 80:80
+    environment:
+      #ConnectionStrings_PixelartDatabaseDocker: "Server=db,1433;Database=PixelartDatabase;User Id=sa;Password=P$ssw0rd;"
+      CONNECTIONSTRINGS__PIXELARTDATABASEDOCKER: "Server=db,1433;Database=PixelartDatabase;User Id=sa;Password=P$$ssw0rd;"
 
   db:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
