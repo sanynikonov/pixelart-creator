@@ -8,7 +8,9 @@
     @foreach (var item in _pixelarts)
     {
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="Images/@item.ResultPath" alt="Card image cap">
+            <a href="pixelarts/@item.Id">
+                <img class="card-img-top" src="Images/@item.ResultPath" alt="Card image cap">
+            </a>
             <div class="card-body">
                 <h5 class="card-title">"@item.Name"</h5>
                 <p class="card-text text-truncate">@item.Description</p>
