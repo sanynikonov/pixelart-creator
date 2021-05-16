@@ -1,5 +1,6 @@
 ﻿@page "/colors"
-@inject IColorService _colorService
+@inject IColorService ColorService
+@inject NavigationManager NavManager
 
 <h3>Colors Library</h3>
 
@@ -8,7 +9,7 @@
     {
         <div class="card">
             <div class="card-header d-flex flex-row" id="heading@(item.Id)">
-                <div class="m-1" style="height: 30px; width: 30px; background-color: rgb(@item.R, @item.G, @item.B)"></div>
+                <a name="@item.Id"><div class="m-1" style="height: 30px; width: 30px; background-color: rgb(@item.R, @item.G, @item.B)"></div></a>
                 <h5 class="m-1 mb-0">
                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                             data-target="#collapse@(item.Id)" aria-expanded="false" aria-controls="collapse@(item.Id)">
@@ -17,7 +18,8 @@
                 </h5>
             </div>
 
-            <div id="collapse@(item.Id)" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div id="collapse@(item.Id)" class="collapse @(_selectedColorId == item.Id ? "show" : string.Empty)"
+                 aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach (var block in item.BlocksNames)
@@ -33,11 +35,15 @@
 
 @code {
     private IEnumerable<ColorLibraryItemModel> _colors = new List<ColorLibraryItemModel>();
+    private int _selectedColorId;
+    private const string SelectedColorParameter = "selected";
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        _colors = await _colorService.GetColorsLibraryAsync();
+        _colors = await ColorService.GetColorsLibraryAsync();
+
+        NavManager.TryGetQueryString<int>(SelectedColorParameter, out _selectedColorId);
     }
 }
