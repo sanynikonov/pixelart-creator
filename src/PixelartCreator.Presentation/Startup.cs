@@ -36,7 +36,7 @@ namespace PixelartCreator.Presentation
             services.AddServerSideBlazor();
 
             services.AddInfrastructureServices(
-                Configuration.GetConnectionString("PixelartDatabaseDocker"), Environment.WebRootPath);
+                Configuration.GetConnectionString("PixelartDatabase"), Environment.WebRootPath);
             services.AddBusinessServices();
         }
 
