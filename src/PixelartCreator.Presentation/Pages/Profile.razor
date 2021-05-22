@@ -1,6 +1,53 @@
-﻿@page "/profile" 
+﻿@page "/profile"
+@inject IUserService UserService
+@inject IAuthService AuthService
 
-<h3>Profile</h3>
+<h3>My Profile</h3>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <img class="w-50 rounded border" src="https://image.freepik.com/free-vector/illustration-cartoon-artist-girl_61878-763.jpg" />
+        </div>
+        <div class="col-sm-8 container">
+            <div class="mt-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Username</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p>@_userModel?.UserName</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p>@_userModel?.Email</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    private int _userId;
+    private UserModel _userModel;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var state = await AuthenticationStateTask;
+        var id = AuthService.GetUserId(state.User);
+        _userId = int.Parse(id);
+
+        _userModel = await UserService.GetAsync(_userId);
+    }
 }
