@@ -12,22 +12,34 @@
         </div>
         <div class="col-sm-8 container">
             <div class="mt-4">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label>Username</label>
+                <EditForm Model="@_formModel" OnValidSubmit="SubmitFormAsync">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="col-md-9">
+                            <InputText id="username" class="form-control" @bind-Value="_formModel.UserName"></InputText>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <p>@_userModel?.UserName</p>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="col-md-9">
+                            <InputText id="email" class="form-control" @bind-Value="_formModel.Email"></InputText>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label>Email</label>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-9">
+                            <InputText class="form-control" @bind-Value="_formModel.Password" autocomplete="new-password" type="password" placeholder="Enter password to confirm"></InputText>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary" disabled="@_submitDisabled">Update profile</button>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <p>@_userModel?.Email</p>
-                    </div>
-                </div>
+                </EditForm>
             </div>
         </div>
     </div>
@@ -36,6 +48,9 @@
 @code {
     private int _userId;
     private UserModel _userModel;
+    private UpdateCredentialsModel _formModel = new UpdateCredentialsModel();
+    private bool _submitDisabled;
+
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -49,5 +64,18 @@
         _userId = int.Parse(id);
 
         _userModel = await UserService.GetAsync(_userId);
+
+        _formModel.Email = _userModel.Email;
+        _formModel.UserName = _userModel.UserName;
+    }
+
+    private async Task SubmitFormAsync()
+    {
+        var updated = await AuthService.UpdateCredentialsAsync(_formModel);
+
+        if (!updated)
+        {
+
+        }
     }
 }
