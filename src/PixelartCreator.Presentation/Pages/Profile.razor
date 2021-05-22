@@ -1,6 +1,7 @@
 ﻿@page "/profile"
 @inject IUserService UserService
 @inject IAuthService AuthService
+@inject IToastService ToastService
 
 <h3>My Profile</h3>
 
@@ -73,9 +74,13 @@
     {
         var updated = await AuthService.UpdateCredentialsAsync(_formModel);
 
-        if (!updated)
+        if (updated)
         {
-
+            ToastService.ShowSuccess("Your credentials were updated");
+        }
+        else
+        {
+            ToastService.ShowError("Sorry, you typed wrong password");
         }
     }
 }
