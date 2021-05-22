@@ -1,6 +1,86 @@
-﻿@page "/profile" 
+﻿@page "/profile"
+@inject IUserService UserService
+@inject IAuthService AuthService
+@inject IToastService ToastService
 
-<h3>Profile</h3>
+<h3>My Profile</h3>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <img class="w-50 rounded border" src="https://image.freepik.com/free-vector/illustration-cartoon-artist-girl_61878-763.jpg" />
+        </div>
+        <div class="col-sm-8 container">
+            <div class="mt-4">
+                <EditForm Model="@_formModel" OnValidSubmit="SubmitFormAsync">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="col-md-9">
+                            <InputText id="username" class="form-control" @bind-Value="_formModel.UserName"></InputText>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="col-md-9">
+                            <InputText id="email" class="form-control" @bind-Value="_formModel.Email"></InputText>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-9">
+                            <InputText class="form-control" @bind-Value="_formModel.Password" autocomplete="new-password" type="password" placeholder="Enter password to confirm"></InputText>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary" disabled="@_submitDisabled">Update profile</button>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    private int _userId;
+    private UserModel _userModel;
+    private UpdateCredentialsModel _formModel = new UpdateCredentialsModel();
+    private bool _submitDisabled;
+
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var state = await AuthenticationStateTask;
+        var id = AuthService.GetUserId(state.User);
+        _userId = int.Parse(id);
+
+        _userModel = await UserService.GetAsync(_userId);
+
+        _formModel.Email = _userModel.Email;
+        _formModel.UserName = _userModel.UserName;
+    }
+
+    private async Task SubmitFormAsync()
+    {
+        var updated = await AuthService.UpdateCredentialsAsync(_formModel);
+
+        if (updated)
+        {
+            ToastService.ShowSuccess("Your credentials were updated");
+        }
+        else
+        {
+            ToastService.ShowError("Sorry, you typed wrong password");
+        }
+    }
 }

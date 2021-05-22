@@ -14,5 +14,6 @@ namespace PixelartCreator.Business
         Task<IdentityResult> RegisterAsync(RegistrationModel model);
         string GetUserId(ClaimsPrincipal principal);
         Task LogoutAsync();
+        Task<bool> UpdateCredentialsAsync(UpdateCredentialsModel model);
     }
 }

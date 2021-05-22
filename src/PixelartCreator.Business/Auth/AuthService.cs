@@ -50,5 +50,23 @@ namespace PixelartCreator.Business
 
             return await _signInManager.UserManager.CreateAsync(user, model.Password);
         }
+
+        public async Task<bool> UpdateCredentialsAsync(UpdateCredentialsModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            var verified = await _userManager.CheckPasswordAsync(user, model.Password);
+
+            if (!verified)
+            {
+                return false;
+            }
+
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            return result.Succeeded;
+        }
     }
 }
