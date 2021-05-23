@@ -3,17 +3,16 @@
 @inject IPixelartService _pixelartService
 @inject IColorService _colorService
 
-<h3>Create Pixelart</h3>
-
-<div class="custom-file">
-    <InputFile accept=".jpg,.png" class="custom-file-input" OnChange="UploadFile" />
-    <input type="file" class="custom-file-input" id="file-input">
-    <label class="custom-file-label" for="file-input">Choose file</label>
-</div>
-
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-sm-4 border p-3 rounded">
+<h3 class="align-content-center">Create Pixelart</h3>
+<div class="container">
+    <div class="row mt-3">
+        <div class="custom-file">
+            <InputFile accept=".jpg,.png" class="custom-file-input" id="file-input" OnChange="UploadFile" />
+            <label class="custom-file-label" for="file-input">Choose file</label>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-4 p-3 border rounded">
             <h4 class="text-center">Options</h4>
             <hr />
             <EditForm Model="@_options" OnValidSubmit="SubmitForm">
@@ -47,8 +46,8 @@
                             var tempint = i;
                             if (colors[i].Selected)
                             {
-                                <div style="background-color: rgb(@colors[i].Color.R, @colors[i].Color.G, @colors[i].Color.B); width: 30px; height: 30px"
-                                     @onclick="() => ToggleColor(tempint)"></div>
+                                <div style="background-color: rgb(@colors[i].Color.R, @colors[i].Color.G, @colors[i].Color.B);
+                                    width: 30px; height: 30px" @onclick="() => ToggleColor(tempint)"></div>
                             }
                             else
                             {
@@ -66,14 +65,12 @@
                 </div>
             </EditForm>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-8 border rounded p-0">
             <div class="btn-group d-flex">
-                <button class="flex-fill btn @TabColour(Source)"
-                        @onclick="@(() => ChangeActiveTab(Source))">
+                <button class="flex-fill btn @TabColour(Source)" @onclick="@(() => ChangeActiveTab(Source))">
                     Photo
                 </button>
-                <button class="flex-fill btn @TabColour(Result)"
-                        @onclick="@(() => ChangeActiveTab(Result))">
+                <button class="flex-fill btn @TabColour(Result)" @onclick="@(() => ChangeActiveTab(Result))">
                     Pixelart
                 </button>
             </div>
@@ -83,7 +80,7 @@
                 {
                     @if (_uploadedFileName != null)
                     {
-                        <img style="max-width: 100%" src="Images/@_uploadedFileName" />
+                        <img style="width: 100%; image-rendering: pixelated;" src="Images/@_uploadedFileName" />
                     }
                     else
                     {
@@ -94,7 +91,7 @@
                 {
                     @if (_pixelartFileName != null)
                     {
-                        <img style="max-width: 100%" src="Images/@_pixelartFileName" />
+                        <img style="width: 100%; image-rendering: pixelated;" src="Images/@_pixelartFileName" />
                     }
                     else
                     {
