@@ -36,19 +36,18 @@
                     <ValidationMessage For="@(() => _options.Unit)" />
                 </div>
                 <div class="d-flex align-content-start flex-wrap">
-                    @foreach (var item in colors)
+                    @for (int i = 0; i < colors.Count; i++)
                     {
-                        if (item.Selected)
+                        var tempint = i;
+                        if (colors[i].Selected)
                         {
-                            var id = item.Color.Id;
-                            <div style="background-color: rgb(@item.Color.R, @item.Color.G, @item.Color.B); width: 30px; height: 30px"
-                                 @onclick="() => ToggleColor(id)"></div>
+                            <div style="background-color: rgb(@colors[i].Color.R, @colors[i].Color.G, @colors[i].Color.B); width: 30px; height: 30px"
+                                 @onclick="() => ToggleColor(tempint)"></div>
                         }
                         else
                         {
-                            var id = item.Color.Id;
                             <div style="background-color: #eee; width: 30px; height: 30px"
-                                 @onclick="() => ToggleColor(id)"></div>
+                                 @onclick="() => ToggleColor(tempint)"></div>
                         }
                     }
                 </div>
@@ -136,15 +135,21 @@
         colors = (await _colorService.GetAsync()).Select(x => (x, true)).ToList();
     }
 
-    private void ToggleColor(int colorId)
+    private void ToggleColor((ColorModel Color, bool Selected) item)
     {
-        var color = colors.First(x => x.Color.Id == colorId);
+        var color = colors.First(x => x.Color.Id == item.Color.Id);
 
         var index = colors.IndexOf(color);
-
         colors[index] = (color.Color, !color.Selected);
 
-        ToastService.ShowInfo("Clicked");
+        //ToastService.ShowInfo("Clicked");
+    }
+
+    private void ToggleColor(int index)
+    {
+        colors[index] = (colors[index].Color, !colors[index].Selected);
+
+        //ToastService.ShowInfo("Clicked");
     }
 
     private async Task UploadFile(IFileListEntry[] files)
