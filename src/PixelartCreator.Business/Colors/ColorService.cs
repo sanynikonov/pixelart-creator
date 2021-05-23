@@ -16,9 +16,32 @@ namespace PixelartCreator.Business
             _repository = repository;
         }
 
-        public async Task<Color> GetAsync(int id)
+        public async Task<ColorModel> GetAsync(int id)
         {
-            return await _repository.GetAsync<Color>(id);
+            var color = await _repository.GetAsync<Color>(id);
+
+            return new ColorModel
+            {
+                A = color.A,
+                B = color.B,
+                R = color.R,
+                G = color.G,
+                Id = color.Id
+            };
+        }
+
+        public async Task<IEnumerable<ColorModel>> GetAsync()
+        {
+            var colors = await _repository.GetAsync<Color>();
+
+            return colors.Select(color => new ColorModel
+            {
+                A = color.A,
+                B = color.B,
+                R = color.R,
+                G = color.G,
+                Id = color.Id
+            });
         }
 
         public async Task<IEnumerable<int>> GetColorsIdsAsync()

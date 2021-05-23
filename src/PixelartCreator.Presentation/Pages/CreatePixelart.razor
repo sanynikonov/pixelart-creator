@@ -5,11 +5,15 @@
 
 <h3>Create Pixelart</h3>
 
-<InputFile accept=".jpg,.png" OnChange="UploadFile" />
+<div class="custom-file">
+    <InputFile accept=".jpg,.png" class="custom-file-input" OnChange="UploadFile" />
+    <input type="file" class="custom-file-input" id="file-input">
+    <label class="custom-file-label" for="file-input">Choose file</label>
+</div>
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-sm-4 border p-3">
+        <div class="col-sm-4 border p-3 rounded">
             <h4 class="text-center">Options</h4>
             <hr />
             <EditForm Model="@_options" OnValidSubmit="SubmitForm">
@@ -34,6 +38,27 @@
                     </InputSelect>
                     <ValidationMessage For="@(() => _options.Unit)" />
                 </div>
+                <hr />
+                <div class="form-group">
+                    <label>Colors</label>
+                    <div class="d-flex align-content-start flex-wrap">
+                        @for (int i = 0; i < colors.Count; i++)
+                        {
+                            var tempint = i;
+                            if (colors[i].Selected)
+                            {
+                                <div style="background-color: rgb(@colors[i].Color.R, @colors[i].Color.G, @colors[i].Color.B); width: 30px; height: 30px"
+                                     @onclick="() => ToggleColor(tempint)"></div>
+                            }
+                            else
+                            {
+                                <div style="background-color: #eee; width: 30px; height: 30px"
+                                     @onclick="() => ToggleColor(tempint)"></div>
+                            }
+                        }
+                    </div>
+                </div>
+                <hr />
                 <div class="container">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary w-50" disabled="@_submitDisabled">Submit</button>
@@ -100,6 +125,8 @@
     private string TabColour(string tabName) => _activeTab == tabName ? "btn-primary" : "btn-secondary";
     private bool PixelartCreated => _pixelartFileName != null;
 
+    private List<(ColorModel Color, bool Selected)> colors = new List<(ColorModel, bool)>();
+
     private void ChangeActiveTab(string tabName) => _activeTab = tabName;
 
     private PixelartOptions _options = new PixelartOptions { Unit = SizeUnit.Pixel };
@@ -108,6 +135,18 @@
     private string _pixelartFileName;
 
     private bool _submitDisabled;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        colors = (await _colorService.GetAsync()).Select(x => (x, true)).ToList();
+    }
+
+    private void ToggleColor(int index)
+    {
+        colors[index] = (colors[index].Color, !colors[index].Selected);
+    }
 
     private async Task UploadFile(IFileListEntry[] files)
     {
@@ -155,7 +194,7 @@
 
     private async Task BuildPixelart()
     {
-        var colorsIds = await _colorService.GetColorsIdsAsync();
+        var colorsIds = colors.Where(x => x.Selected).Select(x => x.Color.Id).ToList();
 
         var model = new PixelartCreateModel
         {
