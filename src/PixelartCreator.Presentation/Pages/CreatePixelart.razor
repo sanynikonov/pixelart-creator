@@ -5,7 +5,11 @@
 
 <h3>Create Pixelart</h3>
 
-<InputFile accept=".jpg,.png" OnChange="UploadFile" />
+<div class="custom-file">
+    <InputFile accept=".jpg,.png" class="custom-file-input" OnChange="UploadFile" />
+    <input type="file" class="custom-file-input" id="file-input">
+    <label class="custom-file-label" for="file-input">Choose file</label>
+</div>
 
 <div class="container mt-5">
     <div class="row">
