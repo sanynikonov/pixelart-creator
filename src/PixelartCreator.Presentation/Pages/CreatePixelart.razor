@@ -38,8 +38,13 @@
                     <ValidationMessage For="@(() => _options.Unit)" />
                 </div>
                 <hr />
-                <div class="form-group">
-                    <label>Colors <i class="far fa-times-circle"></i><i class="fas fa-redo-alt"></i></label>
+                <div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Palette</h5>
+                        <div>
+                            <button type="button" class="btn btn-success btn-sm" @onclick="SelectAllColors">Reset</button>
+                        </div>
+                    </div>
                     <div class="d-flex align-content-start flex-wrap">
                         @for (int i = 0; i < colors.Count; i++)
                         {
@@ -143,6 +148,14 @@
     private void ToggleColor(int index)
     {
         colors[index] = (colors[index].Color, !colors[index].Selected);
+    }
+
+    private void SelectAllColors()
+    {
+        for (int i = 0; i < colors.Count; i++)
+        {
+            colors[i] = (colors[i].Color, true);
+        }
     }
 
     private async Task UploadFile(IFileListEntry[] files)
