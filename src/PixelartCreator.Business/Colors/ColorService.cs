@@ -26,6 +26,7 @@ namespace PixelartCreator.Business
                 B = color.B,
                 R = color.R,
                 G = color.G,
+                Id = color.Id
             };
         }
 
@@ -39,6 +40,7 @@ namespace PixelartCreator.Business
                 B = color.B,
                 R = color.R,
                 G = color.G,
+                Id = color.Id
             });
         }
 
