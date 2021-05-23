@@ -135,21 +135,9 @@
         colors = (await _colorService.GetAsync()).Select(x => (x, true)).ToList();
     }
 
-    private void ToggleColor((ColorModel Color, bool Selected) item)
-    {
-        var color = colors.First(x => x.Color.Id == item.Color.Id);
-
-        var index = colors.IndexOf(color);
-        colors[index] = (color.Color, !color.Selected);
-
-        //ToastService.ShowInfo("Clicked");
-    }
-
     private void ToggleColor(int index)
     {
         colors[index] = (colors[index].Color, !colors[index].Selected);
-
-        //ToastService.ShowInfo("Clicked");
     }
 
     private async Task UploadFile(IFileListEntry[] files)
@@ -198,7 +186,7 @@
 
     private async Task BuildPixelart()
     {
-        var colorsIds = await _colorService.GetColorsIdsAsync();
+        var colorsIds = colors.Where(x => x.Selected).Select(x => x.Color.Id).ToList();
 
         var model = new PixelartCreateModel
         {
