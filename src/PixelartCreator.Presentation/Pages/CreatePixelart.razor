@@ -2,7 +2,6 @@
 @inject IFileService _fileService
 @inject IPixelartService _pixelartService
 @inject IColorService _colorService
-@inject IToastService ToastService
 
 <h3>Create Pixelart</h3>
 
@@ -35,22 +34,27 @@
                     </InputSelect>
                     <ValidationMessage For="@(() => _options.Unit)" />
                 </div>
-                <div class="d-flex align-content-start flex-wrap">
-                    @for (int i = 0; i < colors.Count; i++)
-                    {
-                        var tempint = i;
-                        if (colors[i].Selected)
+                <hr />
+                <div class="form-group">
+                    <label>Colors</label>
+                    <div class="d-flex align-content-start flex-wrap">
+                        @for (int i = 0; i < colors.Count; i++)
                         {
-                            <div style="background-color: rgb(@colors[i].Color.R, @colors[i].Color.G, @colors[i].Color.B); width: 30px; height: 30px"
-                                 @onclick="() => ToggleColor(tempint)"></div>
+                            var tempint = i;
+                            if (colors[i].Selected)
+                            {
+                                <div style="background-color: rgb(@colors[i].Color.R, @colors[i].Color.G, @colors[i].Color.B); width: 30px; height: 30px"
+                                     @onclick="() => ToggleColor(tempint)"></div>
+                            }
+                            else
+                            {
+                                <div style="background-color: #eee; width: 30px; height: 30px"
+                                     @onclick="() => ToggleColor(tempint)"></div>
+                            }
                         }
-                        else
-                        {
-                            <div style="background-color: #eee; width: 30px; height: 30px"
-                                 @onclick="() => ToggleColor(tempint)"></div>
-                        }
-                    }
+                    </div>
                 </div>
+                <hr />
                 <div class="container">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary w-50" disabled="@_submitDisabled">Submit</button>
