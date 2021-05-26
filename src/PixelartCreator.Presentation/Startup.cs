@@ -56,7 +56,6 @@ namespace PixelartCreator.Presentation
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
