@@ -5,8 +5,8 @@ services:
   pixelart-creator:
     image: ${DOCKER_REGISTRY-}pixelart-creator
     build:
-      context: .
-      dockerfile: ../../src/PixelartCreator.Presentation/Dockerfile
+      context: ../../.
+      dockerfile: src/PixelartCreator.Presentation/Dockerfile
     environment:
       CONNECTIONSTRINGS__PIXELARTDATABASE: "Server=db,1433;Database=PixelartDatabase;User Id=sa;Password=P$$ssw0rd;"
 
