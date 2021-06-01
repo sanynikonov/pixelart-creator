@@ -30,8 +30,10 @@ namespace PixelartCreator.Integration.Tests
             var model = new FileUploadModel { OldName = fileName, Stream = stream };
 
             var actual = await _service.UploadImageAsync(model);
+            var fileExists = File.Exists(Path.Combine(_rootPath, "Images", actual));
 
             Assert.Contains(model.OldName, actual);
+            Assert.True(fileExists);
         }
 
         [Fact]
