@@ -1,1 +1,1 @@
-# pixelart-creator
+# Pixelart Creator
