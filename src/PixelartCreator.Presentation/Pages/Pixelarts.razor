@@ -23,12 +23,12 @@
 
 @if (_filter.PageNumber > 1)
 {
-    <button @onclick="async () => await DownloadPageAsync(_filter.PageSize, _filter.PageNumber - 1)"
-            class="btn btn-primary">
-        Previous
-    </button>
+<button @onclick="async () => await DownloadPageAsync(_filter.PageSize, _filter.PageNumber - 1)"
+        class="btn btn-primary">
+    Previous
+</button>
 }
-@if (_pixelarts.Count() <= _filter.PageSize)
+@if (_pixelarts.Count() == _filter.PageSize)
 {
     <button @onclick="async () => await DownloadPageAsync(_filter.PageSize, _filter.PageNumber + 1)"
             class="btn btn-primary">
