@@ -1,0 +1,382 @@
+.assembly _
+{
+    .custom instance void [System.Private.CoreLib]System.Runtime.CompilerServices.CompilationRelaxationsAttribute::.ctor(int32) = (
+        01 00 08 00 00 00 00 00
+    )
+    .custom instance void [System.Private.CoreLib]System.Runtime.CompilerServices.RuntimeCompatibilityAttribute::.ctor() = (
+        01 00 01 00 54 02 16 57 72 61 70 4e 6f 6e 45 78
+        63 65 70 74 69 6f 6e 54 68 72 6f 77 73 01
+    )
+    .custom instance void [System.Private.CoreLib]System.Diagnostics.DebuggableAttribute::.ctor(valuetype [System.Private.CoreLib]System.Diagnostics.DebuggableAttribute/DebuggingModes) = (
+        01 00 07 01 00 00 00 00
+    )
+    .permissionset reqmin = (
+        2e 01 80 92 53 79 73 74 65 6d 2e 53 65 63 75 72
+        69 74 79 2e 50 65 72 6d 69 73 73 69 6f 6e 73 2e
+        53 65 63 75 72 69 74 79 50 65 72 6d 69 73 73 69
+        6f 6e 41 74 74 72 69 62 75 74 65 2c 20 53 79 73
+        74 65 6d 2e 50 72 69 76 61 74 65 2e 43 6f 72 65
+        4c 69 62 2c 20 56 65 72 73 69 6f 6e 3d 35 2e 30
+        2e 30 2e 30 2c 20 43 75 6c 74 75 72 65 3d 6e 65
+        75 74 72 61 6c 2c 20 50 75 62 6c 69 63 4b 65 79
+        54 6f 6b 65 6e 3d 37 63 65 63 38 35 64 37 62 65
+        61 37 37 39 38 65 15 01 54 02 10 53 6b 69 70 56
+        65 72 69 66 69 63 61 74 69 6f 6e 01
+    )
+    .hash algorithm 0x00008004 // SHA1
+    .ver 0:0:0:0
+}
+
+.class private auto ansi '<Module>'
+{
+} // end of class <Module>
+
+.class public auto ansi beforefieldinit HeapSort
+    extends [System.Private.CoreLib]System.Object
+{
+    // Methods
+    .method public hidebysig 
+        instance void sort (
+            int32[] arr
+        ) cil managed 
+    {
+        // Method begins at RVA 0x2050
+        // Code size 87 (0x57)
+        .maxstack 4
+        .locals init (
+            [0] int32 n,
+            [1] int32 i,
+            [2] bool,
+            [3] int32 i,
+            [4] int32 temp,
+            [5] bool
+        )
+
+        IL_0000: nop
+        IL_0001: ldarg.1
+        IL_0002: ldlen
+        IL_0003: conv.i4
+        IL_0004: stloc.0
+        IL_0005: ldloc.0
+        IL_0006: ldc.i4.2
+        IL_0007: div
+        IL_0008: ldc.i4.1
+        IL_0009: sub
+        IL_000a: stloc.1
+        // sequence point: hidden
+        IL_000b: br.s IL_001b
+        // loop start (head: IL_001b)
+            IL_000d: ldarg.0
+            IL_000e: ldarg.1
+            IL_000f: ldloc.0
+            IL_0010: ldloc.1
+            IL_0011: call instance void HeapSort::heapify(int32[], int32, int32)
+            IL_0016: nop
+            IL_0017: ldloc.1
+            IL_0018: ldc.i4.1
+            IL_0019: sub
+            IL_001a: stloc.1
+
+            IL_001b: ldloc.1
+            IL_001c: ldc.i4.0
+            IL_001d: clt
+            IL_001f: ldc.i4.0
+            IL_0020: ceq
+            IL_0022: stloc.2
+            // sequence point: hidden
+            IL_0023: ldloc.2
+            IL_0024: brtrue.s IL_000d
+        // end loop
+
+        IL_0026: ldloc.0
+        IL_0027: ldc.i4.1
+        IL_0028: sub
+        IL_0029: stloc.3
+        // sequence point: hidden
+        IL_002a: br.s IL_004c
+        // loop start (head: IL_004c)
+            IL_002c: nop
+            IL_002d: ldarg.1
+            IL_002e: ldc.i4.0
+            IL_002f: ldelem.i4
+            IL_0030: stloc.s 4
+            IL_0032: ldarg.1
+            IL_0033: ldc.i4.0
+            IL_0034: ldarg.1
+            IL_0035: ldloc.3
+            IL_0036: ldelem.i4
+            IL_0037: stelem.i4
+            IL_0038: ldarg.1
+            IL_0039: ldloc.3
+            IL_003a: ldloc.s 4
+            IL_003c: stelem.i4
+            IL_003d: ldarg.0
+            IL_003e: ldarg.1
+            IL_003f: ldloc.3
+            IL_0040: ldc.i4.0
+            IL_0041: call instance void HeapSort::heapify(int32[], int32, int32)
+            IL_0046: nop
+            IL_0047: nop
+            IL_0048: ldloc.3
+            IL_0049: ldc.i4.1
+            IL_004a: sub
+            IL_004b: stloc.3
+
+            IL_004c: ldloc.3
+            IL_004d: ldc.i4.0
+            IL_004e: cgt
+            IL_0050: stloc.s 5
+            // sequence point: hidden
+            IL_0052: ldloc.s 5
+            IL_0054: brtrue.s IL_002c
+        // end loop
+
+        IL_0056: ret
+    } // end of method HeapSort::sort
+
+    .method private hidebysig 
+        instance void heapify (
+            int32[] arr,
+            int32 n,
+            int32 i
+        ) cil managed 
+    {
+        // Method begins at RVA 0x20b4
+        // Code size 101 (0x65)
+        .maxstack 4
+        .locals init (
+            [0] int32 largest,
+            [1] int32 l,
+            [2] int32 r,
+            [3] bool,
+            [4] bool,
+            [5] bool,
+            [6] int32 swap
+        )
+
+        IL_0000: nop
+        IL_0001: ldarg.3
+        IL_0002: stloc.0
+        IL_0003: ldc.i4.2
+        IL_0004: ldarg.3
+        IL_0005: mul
+        IL_0006: ldc.i4.1
+        IL_0007: add
+        IL_0008: stloc.1
+        IL_0009: ldc.i4.2
+        IL_000a: ldarg.3
+        IL_000b: mul
+        IL_000c: ldc.i4.2
+        IL_000d: add
+        IL_000e: stloc.2
+        IL_000f: ldloc.1
+        IL_0010: ldarg.2
+        IL_0011: bge.s IL_001d
+
+        IL_0013: ldarg.1
+        IL_0014: ldloc.1
+        IL_0015: ldelem.i4
+        IL_0016: ldarg.1
+        IL_0017: ldloc.0
+        IL_0018: ldelem.i4
+        IL_0019: cgt
+        IL_001b: br.s IL_001e
+
+        IL_001d: ldc.i4.0
+
+        IL_001e: stloc.3
+        // sequence point: hidden
+        IL_001f: ldloc.3
+        IL_0020: brfalse.s IL_0024
+
+        IL_0022: ldloc.1
+        IL_0023: stloc.0
+
+        IL_0024: ldloc.2
+        IL_0025: ldarg.2
+        IL_0026: bge.s IL_0032
+
+        IL_0028: ldarg.1
+        IL_0029: ldloc.2
+        IL_002a: ldelem.i4
+        IL_002b: ldarg.1
+        IL_002c: ldloc.0
+        IL_002d: ldelem.i4
+        IL_002e: cgt
+        IL_0030: br.s IL_0033
+
+        IL_0032: ldc.i4.0
+
+        IL_0033: stloc.s 4
+        // sequence point: hidden
+        IL_0035: ldloc.s 4
+        IL_0037: brfalse.s IL_003b
+
+        IL_0039: ldloc.2
+        IL_003a: stloc.0
+
+        IL_003b: ldloc.0
+        IL_003c: ldarg.3
+        IL_003d: ceq
+        IL_003f: ldc.i4.0
+        IL_0040: ceq
+        IL_0042: stloc.s 5
+        // sequence point: hidden
+        IL_0044: ldloc.s 5
+        IL_0046: brfalse.s IL_0064
+
+        IL_0048: nop
+        IL_0049: ldarg.1
+        IL_004a: ldarg.3
+        IL_004b: ldelem.i4
+        IL_004c: stloc.s 6
+        IL_004e: ldarg.1
+        IL_004f: ldarg.3
+        IL_0050: ldarg.1
+        IL_0051: ldloc.0
+        IL_0052: ldelem.i4
+        IL_0053: stelem.i4
+        IL_0054: ldarg.1
+        IL_0055: ldloc.0
+        IL_0056: ldloc.s 6
+        IL_0058: stelem.i4
+        IL_0059: ldarg.0
+        IL_005a: ldarg.1
+        IL_005b: ldarg.2
+        IL_005c: ldloc.0
+        IL_005d: call instance void HeapSort::heapify(int32[], int32, int32)
+        IL_0062: nop
+        IL_0063: nop
+
+        IL_0064: ret
+    } // end of method HeapSort::heapify
+
+    .method private hidebysig static 
+        void printArray (
+            int32[] arr
+        ) cil managed 
+    {
+        // Method begins at RVA 0x2128
+        // Code size 56 (0x38)
+        .maxstack 2
+        .locals init (
+            [0] int32 n,
+            [1] int32 i,
+            [2] bool
+        )
+
+        IL_0000: nop
+        IL_0001: ldarg.0
+        IL_0002: ldlen
+        IL_0003: conv.i4
+        IL_0004: stloc.0
+        IL_0005: ldc.i4.0
+        IL_0006: stloc.1
+        // sequence point: hidden
+        IL_0007: br.s IL_0029
+        // loop start (head: IL_0029)
+            IL_0009: ldarg.0
+            IL_000a: ldloc.1
+            IL_000b: ldelema [System.Private.CoreLib]System.Int32
+            IL_0010: call instance string [System.Private.CoreLib]System.Int32::ToString()
+            IL_0015: ldstr " "
+            IL_001a: call string [System.Private.CoreLib]System.String::Concat(string, string)
+            IL_001f: call void [System.Console]System.Console::Write(string)
+            IL_0024: nop
+            IL_0025: ldloc.1
+            IL_0026: ldc.i4.1
+            IL_0027: add
+            IL_0028: stloc.1
+
+            IL_0029: ldloc.1
+            IL_002a: ldloc.0
+            IL_002b: clt
+            IL_002d: stloc.2
+            // sequence point: hidden
+            IL_002e: ldloc.2
+            IL_002f: brtrue.s IL_0009
+        // end loop
+
+        IL_0031: call int32 [System.Console]System.Console::Read()
+        IL_0036: pop
+        IL_0037: ret
+    } // end of method HeapSort::printArray
+
+    .method public hidebysig static 
+        void Main () cil managed 
+    {
+        // Method begins at RVA 0x216c
+        // Code size 56 (0x38)
+        .maxstack 3
+        .locals init (
+            [0] int32[] arr,
+            [1] int32 n,
+            [2] class HeapSort ob
+        )
+
+        IL_0000: nop
+        IL_0001: ldc.i4.6
+        IL_0002: newarr [System.Private.CoreLib]System.Int32
+        IL_0007: dup
+        IL_0008: ldtoken field valuetype '<PrivateImplementationDetails>'/'__StaticArrayInitTypeSize=24' '<PrivateImplementationDetails>'::'44BAE820DB76EC4144F68538024DB6E36D85A19E70DC910166B7F7CA3149AADA'
+        IL_000d: call void [System.Private.CoreLib]System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray(class [System.Private.CoreLib]System.Array, valuetype [System.Private.CoreLib]System.RuntimeFieldHandle)
+        IL_0012: stloc.0
+        IL_0013: ldloc.0
+        IL_0014: ldlen
+        IL_0015: conv.i4
+        IL_0016: stloc.1
+        IL_0017: newobj instance void HeapSort::.ctor()
+        IL_001c: stloc.2
+        IL_001d: ldloc.2
+        IL_001e: ldloc.0
+        IL_001f: callvirt instance void HeapSort::sort(int32[])
+        IL_0024: nop
+        IL_0025: ldstr "Sorted array is"
+        IL_002a: call void [System.Console]System.Console::WriteLine(string)
+        IL_002f: nop
+        IL_0030: ldloc.0
+        IL_0031: call void HeapSort::printArray(int32[])
+        IL_0036: nop
+        IL_0037: ret
+    } // end of method HeapSort::Main
+
+    .method public hidebysig specialname rtspecialname 
+        instance void .ctor () cil managed 
+    {
+        // Method begins at RVA 0x21b0
+        // Code size 8 (0x8)
+        .maxstack 8
+
+        IL_0000: ldarg.0
+        IL_0001: call instance void [System.Private.CoreLib]System.Object::.ctor()
+        IL_0006: nop
+        IL_0007: ret
+    } // end of method HeapSort::.ctor
+
+} // end of class HeapSort
+
+.class private auto ansi sealed '<PrivateImplementationDetails>'
+    extends [System.Private.CoreLib]System.Object
+{
+    .custom instance void [System.Private.CoreLib]System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor() = (
+        01 00 00 00
+    )
+    // Nested Types
+    .class nested private explicit ansi sealed '__StaticArrayInitTypeSize=24'
+        extends [System.Private.CoreLib]System.ValueType
+    {
+        .pack 1
+        .size 24
+
+    } // end of class __StaticArrayInitTypeSize=24
+
+
+    // Fields
+    .field assembly static initonly valuetype '<PrivateImplementationDetails>'/'__StaticArrayInitTypeSize=24' '44BAE820DB76EC4144F68538024DB6E36D85A19E70DC910166B7F7CA3149AADA' at I_00002A40
+    .data cil I_00002A40 = bytearray (
+        0c 00 00 00 0b 00 00 00 0d 00 00 00 05 00 00 00
+        06 00 00 00 07 00 00 00
+    )
+
+} // end of class <PrivateImplementationDetails>
+
